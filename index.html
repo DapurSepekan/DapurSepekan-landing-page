@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Judul halaman & meta — diisi otomatis oleh script.js dari content.js -->
+  <title>Dapur Sepekan — Segera Hadir</title>
+  <meta name="description" content="Dapur Sepekan — Solusi makanan rumahan mingguan untuk keluarga urban. Segera hadir. Daftar Early Access sekarang." />
+
+  <!-- Open Graph (untuk preview link di media sosial) -->
+  <meta property="og:title" content="Dapur Sepekan — Segera Hadir" />
+  <meta property="og:description" content="Solusi makanan rumahan mingguan untuk keluarga. Daftar Early Access sekarang." />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon — diatur oleh script.js hanya jika file sudah ada di assets/ -->
+  <!-- <link id="favicon" rel="icon" type="image/png" href="assets/favicon.png" /> -->
+
+  <!-- Google Fonts — Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Stylesheet utama -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- =========================================================
+       NAVBAR
+       ========================================================= -->
+  <nav class="navbar" role="navigation" aria-label="Navigasi utama">
+    <div class="container">
+      <div class="navbar__inner">
+
+        <!-- Logo -->
+        <a href="#beranda" class="navbar__logo" aria-label="Dapur Sepekan - Beranda">
+          <div id="navbar-logo">
+            <!-- Logo diisi oleh script.js -->
+          </div>
+        </a>
+
+        <!-- Menu desktop -->
+        <ul class="navbar__menu" id="navbar-menu-desktop" role="list">
+          <!-- Diisi oleh script.js -->
+        </ul>
+
+        <!-- Tombol CTA desktop -->
+        <div class="navbar__cta">
+          <button class="btn btn--primary js-navbar-cta" onclick="scrollToForm()">
+            Daftar Early Access
+          </button>
+        </div>
+
+        <!-- Tombol hamburger (mobile) -->
+        <button
+          class="navbar__hamburger"
+          id="hamburger-btn"
+          aria-label="Buka menu navigasi"
+          aria-expanded="false"
+          aria-controls="navbar-mobile-menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+      </div><!-- /.navbar__inner -->
+    </div><!-- /.container -->
+
+    <!-- Menu mobile (muncul saat hamburger diklik) -->
+    <div class="navbar__mobile-menu" id="navbar-mobile-menu" role="menu">
+      <ul id="navbar-menu-mobile">
+        <!-- Diisi oleh script.js -->
+      </ul>
+      <div class="navbar__mobile-cta">
+        <button class="btn btn--primary btn--full js-navbar-cta" onclick="scrollToForm(); document.getElementById('navbar-mobile-menu').classList.remove('open');">
+          Daftar Early Access
+        </button>
+      </div>
+    </div>
+
+  </nav><!-- /.navbar -->
+
+
+  <!-- =========================================================
+       HERO SECTION + LEAD FORM
+       Keduanya disatukan dalam satu baris (grid) pada desktop
+       ========================================================= -->
+  <section id="beranda" aria-label="Hero - Dapur Sepekan">
+    <div class="container">
+      <div class="hero__grid">
+
+        <!-- Kolom kiri: konten hero + gambar (pada mobile) -->
+        <div class="hero__content">
+          <span class="hero__badge" id="hero-badge">Segera Hadir</span>
+
+          <h1 class="hero__headline" id="hero-headline">
+            Makanan Rumahan Keluarga,<br>Lebih Praktis Setiap Pekan.
+          </h1>
+
+          <p class="hero__subheadline" id="hero-subheadline">
+            <!-- Diisi oleh script.js -->
+          </p>
+
+          <!-- Gambar hero (diisi oleh script.js) — pada desktop tersembunyi,
+               digantikan oleh gambar di dalam form card -->
+          <div id="hero-image-container" class="hero__image-mobile">
+            <!-- Diisi oleh script.js -->
+          </div>
+        </div><!-- /.hero__content -->
+
+        <!-- Kolom kanan: Lead Form -->
+        <div class="hero__form-card" id="form-card">
+          <h2 class="form-title" id="form-title">Jadilah yang Pertama</h2>
+          <p class="form-subtitle" id="form-subtitle">
+            <!-- Diisi oleh script.js -->
+          </p>
+
+          <!-- Pesan error jika submit gagal -->
+          <div class="form-submit-error" id="form-submit-error" role="alert" aria-live="polite"></div>
+
+          <form id="early-access-form" novalidate aria-label="Formulir Early Access">
+
+            <!-- Input: Nama -->
+            <div class="form-group">
+              <label class="form-label" for="input-name" id="label-name">Nama</label>
+              <input
+                type="text"
+                id="input-name"
+                name="nama"
+                class="form-input"
+                placeholder="Nama lengkap kamu"
+                autocomplete="name"
+                aria-required="true"
+                aria-describedby="error-name"
+              />
+              <span class="form-error" id="error-name" role="alert"></span>
+            </div>
+
+            <!-- Input: Username Instagram -->
+            <div class="form-group">
+              <label class="form-label" for="input-instagram" id="label-instagram">Username Instagram</label>
+              <input
+                type="text"
+                id="input-instagram"
+                name="instagram"
+                class="form-input"
+                placeholder="@username_instagram"
+                autocomplete="off"
+                aria-required="true"
+                aria-describedby="error-instagram"
+                inputmode="text"
+              />
+              <span class="form-error" id="error-instagram" role="alert"></span>
+            </div>
+
+            <!-- Tombol Submit -->
+            <button type="submit" class="btn btn--primary btn--full btn--lg" id="form-submit-btn">
+              Daftar Early Access
+            </button>
+
+          </form><!-- /#early-access-form -->
+
+          <!-- Link Privacy Policy -->
+          <p class="form-privacy" id="form-privacy-text">
+            <!-- Diisi oleh script.js -->
+          </p>
+
+        </div><!-- /.hero__form-card -->
+
+      </div><!-- /.hero__grid -->
+    </div><!-- /.container -->
+  </section><!-- /#beranda -->
+
+
+  <!-- =========================================================
+       CARA KERJA
+       ========================================================= -->
+  <section id="cara-kerja" aria-label="Cara Kerja Dapur Sepekan">
+    <div class="container">
+
+      <div class="section-header section-header--center" data-animate>
+        <span class="section-badge" id="how-badge">Cara Kerja</span>
+        <h2 class="section-title" id="how-title">Semudah Ini Menikmati Makanan Rumahan</h2>
+        <p class="section-subtitle" id="how-subtitle">
+          <!-- Diisi oleh script.js -->
+        </p>
+      </div>
+
+      <!-- Grid langkah-langkah — diisi oleh script.js -->
+      <div class="steps-grid" id="steps-grid" role="list">
+        <!-- Diisi oleh script.js -->
+      </div>
+
+    </div>
+  </section><!-- /#cara-kerja -->
+
+
+  <!-- =========================================================
+       PAKET LANGGANAN
+       ========================================================= -->
+  <section id="paket" aria-label="Paket Langganan Dapur Sepekan">
+    <div class="container">
+
+      <div class="section-header section-header--center" data-animate>
+        <span class="section-badge" id="packages-badge">Paket Kami</span>
+        <h2 class="section-title" id="packages-title">Pilih Paket yang Tepat</h2>
+        <p class="section-subtitle" id="packages-subtitle">
+          <!-- Diisi oleh script.js -->
+        </p>
+      </div>
+
+      <!-- Grid paket — diisi oleh script.js -->
+      <div class="packages-grid" id="packages-grid">
+        <!-- Diisi oleh script.js -->
+      </div>
+
+    </div>
+  </section><!-- /#paket -->
+
+
+  <!-- =========================================================
+       FORMAT MAKANAN (Chilled & Frozen)
+       ========================================================= -->
+  <section id="format-makanan" aria-label="Format Makanan Dapur Sepekan">
+    <div class="container">
+
+      <div class="section-header section-header--center" data-animate>
+        <span class="section-badge" id="format-badge">Format Makanan</span>
+        <h2 class="section-title" id="format-title">Dua Format yang Sedang Kami Siapkan</h2>
+        <p class="section-subtitle" id="format-subtitle">
+          <!-- Diisi oleh script.js -->
+        </p>
+      </div>
+
+      <!-- Grid format — diisi oleh script.js -->
+      <div class="format-grid" id="format-grid">
+        <!-- Diisi oleh script.js -->
+      </div>
+
+    </div>
+  </section><!-- /#format-makanan -->
+
+
+  <!-- =========================================================
+       FAQ
+       ========================================================= -->
+  <section id="faq" aria-label="Pertanyaan yang Sering Ditanyakan">
+    <div class="container">
+
+      <div class="section-header section-header--center" data-animate>
+        <span class="section-badge" id="faq-badge">FAQ</span>
+        <h2 class="section-title" id="faq-title">Pertanyaan yang Sering Ditanyakan</h2>
+        <p class="section-subtitle" id="faq-subtitle">
+          <!-- Diisi oleh script.js -->
+        </p>
+      </div>
+
+      <!-- Daftar FAQ — diisi oleh script.js -->
+      <div class="faq-list" id="faq-list" role="list">
+        <!-- Diisi oleh script.js -->
+      </div>
+
+    </div>
+  </section><!-- /#faq -->
+
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer role="contentinfo" aria-label="Footer Dapur Sepekan">
+    <div class="container">
+      <div class="footer__grid">
+
+        <!-- Kolom 1: Brand -->
+        <div class="footer__brand">
+          <div id="footer-logo">
+            <!-- Logo diisi oleh script.js -->
+          </div>
+          <p class="footer__brand-name" id="footer-brand-name"></p>
+          <p class="footer__brand-tagline" id="footer-brand-tagline"></p>
+          <p class="footer__brand-desc" id="footer-desc"></p>
+        </div>
+
+        <!-- Kolom 2: Navigasi -->
+        <div class="footer__col">
+          <h3 class="footer__col-title" id="footer-nav-title">Navigasi</h3>
+          <ul class="footer__nav" id="footer-nav">
+            <!-- Diisi oleh script.js -->
+          </ul>
+        </div>
+
+        <!-- Kolom 3: Kontak -->
+        <div class="footer__col">
+          <h3 class="footer__col-title" id="footer-contact-title">Hubungi Kami</h3>
+          <ul class="footer__contact" id="footer-contact">
+            <!-- Diisi oleh script.js -->
+          </ul>
+        </div>
+
+      </div><!-- /.footer__grid -->
+
+      <!-- Bottom bar -->
+      <div class="footer__bottom">
+        <p class="footer__copyright" id="footer-copyright"></p>
+        <button class="footer__privacy-btn" id="footer-privacy-btn" type="button">
+          Kebijakan Privasi
+        </button>
+      </div>
+
+    </div><!-- /.container -->
+  </footer>
+
+
+  <!-- =========================================================
+       MODAL — Thank You (muncul setelah form berhasil dikirim)
+       ========================================================= -->
+  <div
+    class="modal-overlay modal-thankyou"
+    id="thankyou-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Terima kasih sudah mendaftar"
+  >
+    <div class="modal-box">
+      <button
+        class="modal-close"
+        onclick="closeModal('thankyou-modal')"
+        aria-label="Tutup popup"
+      >✕</button>
+      <div id="modal-body-thankyou">
+        <!-- Diisi oleh script.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       MODAL — Privacy Policy
+       ========================================================= -->
+  <div
+    class="modal-overlay modal-privacy"
+    id="privacy-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Kebijakan Privasi"
+  >
+    <div class="modal-box">
+      <button
+        class="modal-close"
+        onclick="closeModal('privacy-modal')"
+        aria-label="Tutup popup"
+      >✕</button>
+      <div id="modal-body-privacy">
+        <!-- Diisi oleh script.js -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       SCRIPTS — Urutan penting: content.js harus dimuat lebih dulu
+       ========================================================= -->
+  <script src="content.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
