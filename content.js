@@ -53,16 +53,33 @@ const CONTENT = {
   //  HERO SECTION
   // ============================================================
   hero: {
-    badge: "Segera Hadir",
+    badge: "COMING SOON",
 
-    // Headline utama — bisa menggunakan <br> untuk ganti baris
-    headline: "Makanan Rumahan Keluarga,<br>Lebih Praktis Setiap Pekan.",
+    // Tagline di atas headline
+    tagline: "Your Family Home-Cooked Meal Solution",
 
-    // Subheadline — penjelasan singkat di bawah headline
-    subheadline: "Dapur Sepekan hadir untuk keluarga urban yang ingin menikmati makanan rumahan lezat tanpa harus repot berbelanja dan memasak setiap hari.",
+    // Headline utama
+    headline: "A NEW WAY TO ENJOY FAMILY MEALS",
+
+    // Sub-headline pertama
+    subheadlineQuestion: "Setiap Hari Mikirin Menu? Saatnya Punya Solusi!",
+
+    // Paragraf utama
+    subheadline: "Ingin keluarga tetap menikmati masakan rumahan yang enak dan bervariasi, tanpa harus repot memikirkan menu dan memasak setiap hari?",
+
+    // Intro brand
+    brandIntro: "Kenalan dengan Dapur Sepekan!",
+
+    // Deskripsi produk
+    description: "Solusi paket menu rumahan mingguan dengan porsi keluarga, pilihan hidangan yang bervariasi, dan praktis disimpan serta disajikan kapan saja.",
+
+    // Keunggulan
+    highlight: "Dibuat tanpa bahan pengawet dan MSG, serta terjamin halal.",
+
+    // Penutup
+    closing: "Serasa punya home chef, untuk hidangan keluarga setiap hari!",
 
     // Gambar hero — letakkan file di folder assets/ lalu ganti nama file di sini
-    // Ukuran yang disarankan: 800×600 piksel, format .jpg atau .webp
     image: "assets/hero-food.jpg",
     imageAlt: "Sajian makanan rumahan Dapur Sepekan",
   },
@@ -104,6 +121,40 @@ const CONTENT = {
     message: "Kamu sudah terdaftar sebagai Early Access. Kami akan menghubungi kamu melalui Instagram saat Dapur Sepekan siap launching.",
     subMessage: "Pantau terus Instagram kami untuk update terbaru.",
     closeButton: "Tutup",
+  },
+
+  // ============================================================
+  //  CUSTOMER PROBLEM & SOLUTION — Page 2
+  // ============================================================
+  customerProblem: {
+    sectionBadge: "Tantangan Keluarga",
+    title: "Mengatur Menu Keluarga Setiap Hari Memang Nggak Selalu Mudah!",
+    subtitle: "Ingin keluarga menikmati masakan rumahan yang sehat dan bervariasi, tapi kesibukan sehari-hari sering jadi tantangan.",
+    problemsIntro: "Pernah mengalami hal-hal ini?",
+
+    problems: [
+      {
+        number: "1",
+        icon: "😓",
+        title: "Sibuk Bekerja, Bingung Menyiapkan Menu Sehat?",
+        description: "Sulit menyiapkan variasi menu sehat untuk keluarga di tengah padatnya aktivitas sehari-hari.",
+      },
+      {
+        number: "2",
+        icon: "🕐",
+        title: "Katering Harian Belum Tentu Sesuai Kebutuhan?",
+        description: "Pengiriman terlambat, waktu makan terganggu. Porsi yang sudah ditentukan pun belum tentu sesuai kebutuhan setiap anggota keluarga.",
+      },
+      {
+        number: "3",
+        icon: "🍽️",
+        title: "Ingin Lebih Bebas Memilih Menu?",
+        description: "Setiap anggota keluarga punya selera berbeda, tetapi pilihan menu katering sering kali terbatas.",
+      },
+    ],
+
+    solutionTitle: "Bersama Dapur Sepekan, Anda Pilih Menunya, Kami Siapkan Hidangannya. Keluarga Tinggal Menikmati!",
+    solutionDesc: "Solusi meal prep rumahan mingguan dengan pilihan menu yang fleksibel, dan praktis disajikan kapan saja.",
   },
 
   // ============================================================

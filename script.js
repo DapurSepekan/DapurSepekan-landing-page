@@ -64,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderContent() {
   renderNavbar();
   renderHero();
+  renderCustomerProblem();
   renderHowItWorks();
   renderPackages();
   renderFoodFormat();
@@ -104,21 +105,35 @@ function renderNavbar() {
 function renderHero() {
   const { hero, form, images } = CONTENT;
 
-  // Badge
-  setTextContent("hero-badge", hero.badge);
+  // Badge & tagline
+  setTextContent("hero-badge",       hero.badge);
+  setTextContent("hero-tagline",     hero.tagline);
+  setTextContent("hero-question",    hero.subheadlineQuestion);
+  setTextContent("hero-subheadline", hero.subheadline);
+  setTextContent("hero-brand-intro", hero.brandIntro);
+  setTextContent("hero-description", hero.description);
+  setTextContent("hero-highlight",   hero.highlight);
+  setTextContent("hero-closing",     hero.closing);
 
-  // Headline (mengizinkan <br> untuk ganti baris)
+  // Headline
   const headlineEl = document.getElementById("hero-headline");
   if (headlineEl) headlineEl.innerHTML = hero.headline;
 
-  // Subheadline
-  setTextContent("hero-subheadline", hero.subheadline);
+  // Brand intro dengan bold
+  const brandIntroEl = document.getElementById("hero-brand-intro");
+  if (brandIntroEl) brandIntroEl.innerHTML = `Kenalan dengan <strong>Dapur Sepekan!</strong>`;
 
-  // Gambar hero — tampil di mobile (di bawah teks hero)
+  // Highlight & closing dengan emoji
+  const highlightEl = document.getElementById("hero-highlight");
+  if (highlightEl) highlightEl.innerHTML = `🌿 ${hero.highlight}`;
+
+  const closingEl = document.getElementById("hero-closing");
+  if (closingEl) closingEl.innerHTML = `✨ ${hero.closing}`;
+
+  // Gambar hero — tampil di mobile
   const heroImgContainer = document.getElementById("hero-image-container");
   if (heroImgContainer) {
     if (AVAILABLE_IMAGES.has(images.heroImage)) {
-      // File ada — render img dengan onerror fallback
       heroImgContainer.innerHTML = createImageHTML(
         images.heroImage,
         hero.imageAlt,
@@ -129,7 +144,6 @@ function renderHero() {
         "Letakkan file hero-food.jpg di folder assets/"
       );
     } else {
-      // File belum ada — langsung tampilkan placeholder, tidak ada 404
       heroImgContainer.innerHTML = `
         <div class="hero__image-placeholder">
           <span class="placeholder-icon">🍽️</span>
@@ -159,6 +173,33 @@ function renderHero() {
       ${form.privacyPolicyText2}
     `;
   }
+}
+
+// --- Customer Problem & Solution ---
+function renderCustomerProblem() {
+  const { customerProblem } = CONTENT;
+  if (!customerProblem) return;
+
+  setTextContent("problem-badge",    customerProblem.sectionBadge);
+  setTextContent("problem-title",    customerProblem.title);
+  setTextContent("problem-subtitle", customerProblem.subtitle);
+  setTextContent("problem-intro",    customerProblem.problemsIntro);
+  setTextContent("solution-title",   customerProblem.solutionTitle);
+  setTextContent("solution-desc",    customerProblem.solutionDesc);
+
+  const grid = document.getElementById("problems-grid");
+  if (!grid) return;
+
+  grid.innerHTML = customerProblem.problems.map(p => `
+    <div class="problem-card">
+      <div class="problem-card__header">
+        <span class="problem-card__number">${p.number}</span>
+        <span class="problem-card__icon">${p.icon}</span>
+      </div>
+      <h3 class="problem-card__title">${p.title}</h3>
+      <p class="problem-card__desc">${p.description}</p>
+    </div>
+  `).join("");
 }
 
 // --- Cara Kerja ---
