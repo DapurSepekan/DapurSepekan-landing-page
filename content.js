@@ -158,38 +158,73 @@ const CONTENT = {
   },
 
   // ============================================================
-  //  CARA KERJA — 4 langkah
+  //  WHY DAPUR SEPEKAN — Page 3
+  // ============================================================
+  whyUs: {
+    sectionBadge: "Kenapa Dapur Sepekan?",
+    title: "Bukan Sekadar Katering, Ini Cara Lebih Praktis Menyiapkan Menu Keluarga!",
+
+    reasons: [
+      {
+        number: "01",
+        icon: "👨‍👩‍👧‍👦",
+        title: "Family-Sized Meal Packages",
+        description: "Paket menu dengan pilihan porsi single maupun keluarga, sesuai kebutuhan makan Anda.",
+      },
+      {
+        number: "02",
+        icon: "🗓️",
+        title: "Weekly Menu Variety",
+        description: "Pilihan lauk dan hidangan rumahan yang bervariasi setiap minggu. Tidak perlu bingung menentukan menu lagi!",
+      },
+      {
+        number: "03",
+        icon: "👨‍🍳",
+        title: "Home Chef Experience",
+        description: "Nikmati kemudahan menyiapkan hidangan rumahan tanpa harus repot memasak dari awal setiap hari.",
+      },
+      {
+        number: "04",
+        icon: "🌿",
+        title: "Healthy & Halal Ingredients",
+        description: "Masakan rumahan yang dibuat tanpa bahan pengawet dan MSG, serta bersertifikat halal. Lebih tenang menyajikan hidangan untuk keluarga.",
+      },
+    ],
+  },
+
+  // ============================================================
+  //  CARA KERJA — Page 4
   //  Setiap langkah memiliki: icon (emoji), title, description
   // ============================================================
   howItWorks: {
     sectionBadge: "Cara Kerja",
-    title: "Semudah Ini Menikmati Makanan Rumahan",
-    subtitle: "Dapur Sepekan sedang disiapkan untuk memberikan pengalaman yang mudah dan menyenangkan.",
+    title: "Pilih, Pesan, Simpan, dan Sajikan. Semudah Itu!",
+    subtitle: "",
 
     steps: [
       {
         number: "01",
         icon: "📋",
-        title: "Pilih Paket",
-        description: "Pilih paket yang sesuai dengan kebutuhan keluarga kamu — Single atau Family Package, dengan pilihan langganan 1 minggu, 1 bulan, atau 3 bulan.",
+        title: "Choose Your Menu",
+        description: "Pilih variasi menu favorit sesuai selera keluarga.",
       },
       {
         number: "02",
-        icon: "🗓️",
-        title: "Menu Disiapkan",
-        description: "Tim Dapur Sepekan menyiapkan variasi menu rumahan untuk 5 hari dalam seminggu, dirancang untuk memastikan kamu tidak bosan.",
+        icon: "⚖️",
+        title: "Select Your Portion",
+        description: "Tentukan porsi single atau keluarga sesuai kebutuhan.",
       },
       {
         number: "03",
         icon: "📦",
-        title: "Dikirim ke Rumah",
-        description: "Makanan disiapkan dengan format Chilled atau Frozen dan akan dikirimkan langsung ke rumah kamu dalam kemasan yang terjaga kualitasnya.",
+        title: "Receive Your Meals",
+        description: "Pesanan diantarkan sesuai jadwal pengiriman mingguan.",
       },
       {
         number: "04",
         icon: "🍽️",
-        title: "Nikmati Bersama Keluarga",
-        description: "Sajikan makanan rumahan lezat untuk keluarga kamu setiap hari, tanpa harus repot berbelanja atau memasak dari nol.",
+        title: "Store, Reheat & Enjoy!",
+        description: "Simpan sesuai petunjuk, panaskan saat dibutuhkan, dan nikmati bersama keluarga.",
       },
     ],
   },

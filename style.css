@@ -1040,6 +1040,75 @@ ul {
    ============================================================ */
 
 /* ============================================================
+   WHY DAPUR SEPEKAN — Page 3
+   ============================================================ */
+#why-us {
+  padding: 5rem 0;
+  background: var(--color-white);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.why-card {
+  background: var(--color-bg-alt, #f8f7f4);
+  border: 1.5px solid var(--color-border, #e8e4df);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.why-card:hover {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.why-card__number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--color-orange);
+  opacity: 0.15;
+  line-height: 1;
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.why-card__icon {
+  font-size: 2.25rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.why-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--color-navy);
+  margin-bottom: 0.6rem;
+  line-height: 1.35;
+}
+
+.why-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-medium);
+  line-height: 1.7;
+}
+
+/* ============================================================
    CUSTOMER PROBLEM & SOLUTION
    ============================================================ */
 #customer-problem {

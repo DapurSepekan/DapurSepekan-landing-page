@@ -65,6 +65,7 @@ function renderContent() {
   renderNavbar();
   renderHero();
   renderCustomerProblem();
+  renderWhyUs();
   renderHowItWorks();
   renderPackages();
   renderFoodFormat();
@@ -173,6 +174,27 @@ function renderHero() {
       ${form.privacyPolicyText2}
     `;
   }
+}
+
+// --- Why Dapur Sepekan ---
+function renderWhyUs() {
+  const { whyUs } = CONTENT;
+  if (!whyUs) return;
+
+  setTextContent("why-badge", whyUs.sectionBadge);
+  setTextContent("why-title", whyUs.title);
+
+  const grid = document.getElementById("why-grid");
+  if (!grid) return;
+
+  grid.innerHTML = whyUs.reasons.map(r => `
+    <div class="why-card" data-animate>
+      <div class="why-card__number">${r.number}</div>
+      <span class="why-card__icon">${r.icon}</span>
+      <h3 class="why-card__title">${r.title}</h3>
+      <p class="why-card__desc">${r.description}</p>
+    </div>
+  `).join("");
 }
 
 // --- Customer Problem & Solution ---
