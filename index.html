@@ -271,6 +271,74 @@
 
 
   <!-- =========================================================
+       COMING SOON
+       ========================================================= -->
+  <section id="coming-soon" aria-label="Coming Soon">
+    <div class="container">
+
+      <div class="coming-soon__inner" data-animate>
+
+        <!-- Badge -->
+        <span class="coming-soon__badge" id="coming-soon-badge">COMING SOON!</span>
+
+        <!-- Judul -->
+        <h2 class="coming-soon__title" id="coming-soon-title"></h2>
+
+        <!-- Form registrasi (reuse form yang sudah ada) -->
+        <div class="coming-soon__form-wrap">
+          <form class="lead-form coming-soon__form" id="coming-soon-form" novalidate>
+
+            <div class="form-group">
+              <label class="form-label" for="cs-name" id="cs-name-label">Nama</label>
+              <input
+                class="form-input"
+                type="text"
+                id="cs-name"
+                name="name"
+                placeholder="Nama lengkap kamu"
+                autocomplete="name"
+                required
+              />
+              <span class="form-error" id="cs-name-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="cs-instagram" id="cs-instagram-label">Username Instagram</label>
+              <input
+                class="form-input"
+                type="text"
+                id="cs-instagram"
+                name="instagram"
+                placeholder="@username_instagram"
+                autocomplete="off"
+                required
+              />
+              <span class="form-error" id="cs-instagram-error" role="alert" aria-live="polite"></span>
+            </div>
+
+            <button class="btn btn--primary btn--full" type="submit" id="cs-submit-btn">
+              Daftar Early Access
+            </button>
+
+            <p class="form-privacy">
+              Dengan mendaftar, kamu menyetujui
+              <button type="button" class="privacy-link" id="cs-privacy-btn">Kebijakan Privasi</button>
+              kami.
+            </p>
+
+          </form>
+        </div>
+
+        <!-- Tagline -->
+        <p class="coming-soon__tagline" id="coming-soon-tagline"></p>
+
+      </div>
+
+    </div>
+  </section><!-- /#coming-soon -->
+
+
+  <!-- =========================================================
        FOOTER
        ========================================================= -->
   <footer role="contentinfo" aria-label="Footer Dapur Sepekan">

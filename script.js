@@ -68,6 +68,7 @@ function renderContent() {
   renderPackages();
   renderFoodFormat();
   renderFAQ();
+  renderComingSoon();
   renderFooter();
   updatePageMeta();
 }
@@ -289,6 +290,98 @@ function renderFAQ() {
       </div>
     </div>
   `).join("");
+}
+
+// --- Coming Soon ---
+function renderComingSoon() {
+  const { comingSoon } = CONTENT;
+  if (!comingSoon) return;
+
+  setTextContent("coming-soon-badge",   comingSoon.badge);
+  setTextContent("coming-soon-title",   comingSoon.title);
+  setTextContent("coming-soon-tagline", comingSoon.tagline);
+
+  // Form submit — reuse logic yang sama dengan form utama
+  const form = document.getElementById("coming-soon-form");
+  if (!form) return;
+
+  const { form: formContent } = CONTENT;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nameInput = document.getElementById("cs-name");
+    const igInput   = document.getElementById("cs-instagram");
+    const nameErr   = document.getElementById("cs-name-error");
+    const igErr     = document.getElementById("cs-instagram-error");
+    const submitBtn = document.getElementById("cs-submit-btn");
+
+    // Reset error
+    nameErr.textContent = "";
+    igErr.textContent   = "";
+
+    let valid = true;
+
+    if (!nameInput.value.trim()) {
+      nameErr.textContent = formContent.errorName;
+      valid = false;
+    }
+
+    const igVal     = igInput.value.trim().replace(/^@/, "");
+    const igPattern = /^[\w.]+$/;
+    if (!igInput.value.trim()) {
+      igErr.textContent = formContent.errorInstagram;
+      valid = false;
+    } else if (!igPattern.test(igVal)) {
+      igErr.textContent = formContent.errorInstagramFormat;
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Submit
+    submitBtn.disabled    = true;
+    submitBtn.textContent = formContent.submitButtonLoading;
+
+    try {
+      // Gunakan endpoint yang sama dengan form utama
+      const mainForm = document.getElementById("lead-form");
+      if (mainForm) {
+        // Trigger submit event pada form utama dengan data yang sama
+        document.getElementById("input-name").value      = nameInput.value.trim();
+        document.getElementById("input-instagram").value = "@" + igVal;
+        mainForm.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+      }
+
+      // Tampilkan Thank You modal
+      const modal = document.getElementById("thankyou-modal");
+      if (modal) {
+        modal.classList.add("is-active");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      form.reset();
+    } catch (err) {
+      igErr.textContent = formContent.errorSubmit;
+    } finally {
+      submitBtn.disabled    = false;
+      submitBtn.textContent = "Daftar Early Access";
+    }
+  });
+
+  // Privacy link
+  const privacyBtn = document.getElementById("cs-privacy-btn");
+  if (privacyBtn) {
+    privacyBtn.addEventListener("click", () => {
+      const modal = document.getElementById("privacy-modal");
+      if (modal) {
+        modal.classList.add("is-active");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+    });
+  }
 }
 
 // --- Footer ---

@@ -266,43 +266,48 @@ const CONTENT = {
   // ============================================================
   faq: {
     sectionBadge: "FAQ",
-    title: "Pertanyaan yang Sering Ditanyakan",
+    title: "Penasaran dengan Dapur Sepekan?",
     subtitle: "Punya pertanyaan lain? Hubungi kami melalui Instagram.",
 
     questions: [
       {
         question: "Apa itu Dapur Sepekan?",
-        answer: "Dapur Sepekan adalah layanan solusi makanan rumahan mingguan untuk keluarga. Kami menyiapkan menu makanan rumahan yang praktis, bervariasi, dan berkualitas — sehingga kamu tidak perlu lagi repot berbelanja bahan makanan dan memasak setiap hari.",
+        answer: "Dapur Sepekan adalah layanan online catering dengan konsep weekly meal prep yang menyediakan pilihan hidangan rumahan untuk kebutuhan makan sehari-hari.",
+      },
+      {
+        question: "Apakah saya bisa memilih menu sendiri?",
+        answer: "Ya! Anda bisa memilih variasi menu yang tersedia sesuai selera keluarga.",
+      },
+      {
+        question: "Apakah tersedia pilihan porsi single dan keluarga?",
+        answer: "Ya! Tersedia pilihan porsi yang dapat disesuaikan dengan kebutuhan makan Anda.",
+      },
+      {
+        question: "Apakah makanan Dapur Sepekan menggunakan bahan pengawet dan MSG?",
+        answer: "Tidak. Seluruh hidangan Dapur Sepekan dibuat 100% tanpa bahan pengawet dan MSG.",
+      },
+      {
+        question: "Apakah Dapur Sepekan bersertifikat halal?",
+        answer: "Ya, Dapur Sepekan menjamin produk yang ditawarkan telah memiliki sertifikasi halal.",
+      },
+      {
+        question: "Bagaimana sistem pengirimannya?",
+        answer: "Dapur Sepekan menyediakan jadwal pengiriman mingguan setiap Sabtu dan Minggu, dengan pilihan waktu siang atau sore. Anda dapat memilih jadwal pengiriman yang paling sesuai dengan kebutuhan dan aktivitas keluarga.",
       },
       {
         question: "Kapan Dapur Sepekan akan launching?",
-        answer: "Dapur Sepekan saat ini sedang dalam tahap persiapan. Kami akan mengumumkan tanggal launching melalui Instagram kami. Daftar Early Access sekarang agar kamu menjadi yang pertama mendapatkan informasi resmi.",
-      },
-      {
-        question: "Siapa yang cocok menggunakan layanan Dapur Sepekan?",
-        answer: "Dapur Sepekan dirancang khususnya untuk keluarga urban yang sibuk bekerja dan membutuhkan solusi makanan keluarga yang praktis. Terutama orang tua dengan anak yang ingin memastikan keluarganya tetap menikmati makanan rumahan berkualitas setiap hari.",
-      },
-      {
-        question: "Apa perbedaan Single Package dan Family Package?",
-        answer: "Single Package ditujukan untuk 1 orang, sementara Family Package dirancang untuk 4 orang. Keduanya menyediakan menu untuk 5 hari dalam seminggu dengan variasi menu yang menarik.",
-      },
-      {
-        question: "Apa pilihan durasi langganan yang tersedia?",
-        answer: "Dapur Sepekan akan menyediakan tiga pilihan durasi langganan: 1 minggu, 1 bulan, dan 3 bulan. Detail harga untuk setiap paket akan diumumkan saat launching.",
-      },
-      {
-        question: "Apa itu format Chilled dan Frozen?",
-        answer: "Dapur Sepekan sedang menyiapkan dua format penyajian makanan: Chilled (makanan dingin siap saji) dan Frozen (makanan beku). Kedua format ini sedang kami kembangkan untuk memberikan pilihan terbaik bagi keluarga. Detail mekanisme dan cara pemesanan setiap format akan diumumkan kemudian.",
-      },
-      {
-        question: "Berapa menu yang disiapkan per minggu?",
-        answer: "Setiap paket mencakup 5 hari menu per minggu (hari kerja Senin–Jumat). Variasi menu dirancang agar kamu dan keluarga tidak bosan.",
-      },
-      {
-        question: "Bagaimana cara mendapatkan informasi saat Dapur Sepekan launching?",
-        answer: "Daftarkan nama dan username Instagram kamu melalui formulir Early Access di halaman ini. Kami akan menghubungi kamu melalui Instagram saat Dapur Sepekan siap launching, termasuk penawaran eksklusif bagi pendaftar awal.",
+        answer: "Dapur Sepekan saat ini sedang dalam tahap persiapan. Kami akan mengumumkan tanggal launching melalui landing page kami. Daftar Early Access sekarang agar kamu menjadi yang pertama mendapatkan informasi resmi.",
       },
     ],
+  },
+
+  // ============================================================
+  //  COMING SOON — Section di bawah FAQ
+  // ============================================================
+  comingSoon: {
+    badge: "COMING SOON!",
+    title: "Jadilah yang pertama mengetahui kabar launching Dapur Sepekan, pilihan menu, dan penawaran spesial dari kami!",
+    tagline: "Something delicious is coming to your family table!",
   },
 
   // ============================================================
