@@ -27,22 +27,25 @@
  * Cara menambah: uncomment baris yang sesuai setelah file ada.
  */
 const AVAILABLE_IMAGES = new Set([
-  "assets/dapursepekan-logo1.png",   // ✅ Logo — sudah ada
-  // "assets/hero-food.jpg",          // ⬜ Tambahkan setelah file ada
-  // "assets/chilled-food.jpg",       // ⬜ Tambahkan setelah file ada
-  // "assets/frozen-food.jpg",        // ⬜ Tambahkan setelah file ada
-  // "assets/family-meal.jpg",        // ⬜ Tambahkan setelah file ada
-  // "assets/single-meal.jpg",        // ⬜ Tambahkan setelah file ada
-  // "assets/favicon.png",            // ⬜ Tambahkan setelah file ada
+  "assets/dapursepekan-logo1.png",          // ✅ Logo — sudah ada
+  "assets/hero-Page1-original.png",          // ✅ Foto hero — sudah ada
+  "assets/Halal_Indonesia.svg.png",          // ✅ Logo Halal Indonesia — sudah ada
+  "assets/logo msg.png",                     // ✅ Badge MSG Free — sudah ada
+  "assets/pengawet.png",                     // ✅ Badge No Added Preservatives — sudah ada
+  // "assets/hero-product.png",              // ⬜ Tambahkan setelah file ada
+  // "assets/favicon.png",                   // ⬜ Tambahkan setelah file ada
 ]);
 // ============================================================
 //  KONFIGURASI GOOGLE APPS SCRIPT
-//  → Ganti nilai APPS_SCRIPT_URL setelah kamu deploy Apps Script
-//  → Ikuti panduan di README.md bagian "Cara Deploy Apps Script"
+//  URL untuk Section 5 — JSON-P via GET
+//  Lokasi konfigurasi: baris ini di script.js
+//  Ganti hanya jika Apps Script di-redeploy dengan URL baru.
 // ============================================================
-const APPS_SCRIPT_URL = "GANTI_DENGAN_URL_APPS_SCRIPT_KAMU";
-// Contoh URL setelah deploy:
-// const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxXXXXX/exec";
+const SECTION5_APPS_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycby84Bf0BX39PBcf-OEIpavHpR6DgCn8VY-HnSA2jaYx9grUlcrNODvB-MOEDpoO_-_3/exec";
+
+// Alias agar referensi APPS_SCRIPT_URL lama tidak error
+const APPS_SCRIPT_URL = SECTION5_APPS_SCRIPT_URL;
 
 
 // ============================================================
@@ -52,9 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderContent();        // Isi semua konten dari content.js
   initNavbar();           // Navbar scroll + hamburger
   initFAQ();              // Accordion FAQ
-  initForm();             // Validasi dan submit form
+  initForm();             // Validasi dan submit form (form lama, jika masih ada)
   initModals();           // Popup Thank You + Privacy Policy
   initScrollAnimation();  // Animasi muncul saat scroll
+  initSection5Form();     // Form Early Access Section 5 (JSON-P)
 });
 
 
@@ -64,11 +68,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function renderContent() {
   renderNavbar();
   renderHero();
-  renderCustomerProblem();
-  renderWhyUs();
+  renderChallenges();   // Page 2 — Tantangan Keluarga
   renderHowItWorks();
   renderPackages();
-  renderFoodFormat();
   renderFAQ();
   renderComingSoon();
   renderFooter();
@@ -104,68 +106,80 @@ function renderNavbar() {
 
 // --- Hero ---
 function renderHero() {
-  const { hero, form, images } = CONTENT;
+  const { hero, form } = CONTENT;
 
-  // Badge & tagline
-  setTextContent("hero-badge",       hero.badge);
-  setTextContent("hero-tagline",     hero.tagline);
-  setTextContent("hero-question",    hero.subheadlineQuestion);
-  setTextContent("hero-subheadline", hero.subheadline);
-  setTextContent("hero-brand-intro", hero.brandIntro);
-  setTextContent("hero-description", hero.description);
-  setTextContent("hero-highlight",   hero.highlight);
-  setTextContent("hero-closing",     hero.closing);
+  // Badge "– COMING SOON"
+  setTextContent("hero-badge", hero.badge);
 
-  // Headline
+  // Eyebrow oranye uppercase
+  setTextContent("hero-eyebrow", hero.eyebrow);
+
+  // Headline dua baris
   const headlineEl = document.getElementById("hero-headline");
-  if (headlineEl) headlineEl.innerHTML = hero.headline;
+  if (headlineEl) {
+    headlineEl.innerHTML =
+      `<span class="hero__headline-line1">${hero.headlineLine1}</span>` +
+      `<em class="hero__headline-line2">${hero.headlineLine2}</em>`;
+  }
 
-  // Brand intro dengan bold
-  const brandIntroEl = document.getElementById("hero-brand-intro");
-  if (brandIntroEl) brandIntroEl.innerHTML = `Kenalan dengan <strong>Dapur Sepekan!</strong>`;
+  // Sub-headline navy bold
+  setTextContent("hero-subhead", hero.subhead);
 
-  // Highlight & closing dengan emoji
-  const highlightEl = document.getElementById("hero-highlight");
-  if (highlightEl) highlightEl.innerHTML = `🌿 ${hero.highlight}`;
+  // Kalimat pengenalan — "Dapur Sepekan!" diwarnai oranye
+  const introEl = document.getElementById("hero-intro");
+  if (introEl) {
+    const introText = hero.intro;
+    introEl.innerHTML = introText.replace(
+      "Dapur Sepekan!",
+      '<span class="hero__intro-brand">Dapur Sepekan!</span>'
+    );
+  }
 
-  const closingEl = document.getElementById("hero-closing");
-  if (closingEl) closingEl.innerHTML = `✨ ${hero.closing}`;
+  // Deskripsi paragraf
+  setTextContent("hero-description", hero.description);
 
-  // Gambar hero — tampil di mobile
-  const heroImgContainer = document.getElementById("hero-image-container");
-  if (heroImgContainer) {
-    if (AVAILABLE_IMAGES.has(images.heroImage)) {
-      heroImgContainer.innerHTML = createImageHTML(
-        images.heroImage,
-        hero.imageAlt,
-        "hero__image-wrapper",
-        "hero__image",
-        "hero__image-placeholder",
-        "🍽️",
-        "Letakkan file hero-food.jpg di folder assets/"
-      );
+  // Badge produk — render berdasarkan array productBadges di content.js
+  const badgesEl = document.getElementById("hero-product-badges");
+  if (badgesEl) {
+    const badges = hero.productBadges || [];
+    if (badges.length === 0) {
+      badgesEl.innerHTML = "";
     } else {
-      heroImgContainer.innerHTML = `
-        <div class="hero__image-placeholder">
-          <span class="placeholder-icon">🍽️</span>
-          <p>Letakkan file hero-food.jpg di folder assets/</p>
+      badgesEl.innerHTML = badges.map(b => `
+        <div class="hero__badge-pill">
+          <img src="${b.img}" alt="${b.imgAlt}" class="hero__badge-img">
         </div>
-      `;
+      `).join("");
     }
   }
 
-  // Form
+  // Gambar produk kanan
+  const productEl = document.getElementById("hero-product-container");
+  if (productEl) {
+    if (AVAILABLE_IMAGES.has(hero.productImage)) {
+      productEl.innerHTML = `<img src="${hero.productImage}" alt="${hero.productImageAlt}" class="hero__product-img">`;
+    } else {
+      // Gambar belum ada — kosongkan kolom (jangan tampilkan placeholder kotak)
+      productEl.innerHTML = "";
+    }
+  }
+
+  // Tombol CTA
+  const ctaBtn = document.getElementById("hero-cta-btn");
+  if (ctaBtn) {
+    ctaBtn.textContent = hero.ctaButton;
+    ctaBtn.href = hero.ctaLink;
+  }
+
+  // Form (ada di #form-section, bukan di hero)
   setTextContent("form-title",    form.title);
   setTextContent("form-subtitle", form.subtitle);
   setAttr("input-name",      "placeholder", form.namePlaceholder);
   setAttr("input-instagram", "placeholder", form.instagramPlaceholder);
   setTextContent("form-submit-btn", form.submitButton);
-
-  // Label form
   setTextContent("label-name",      form.nameLabel);
   setTextContent("label-instagram", form.instagramLabel);
 
-  // Privacy policy text
   const privacyEl = document.getElementById("form-privacy-text");
   if (privacyEl) {
     privacyEl.innerHTML = `
@@ -176,55 +190,70 @@ function renderHero() {
   }
 }
 
-// --- Why Dapur Sepekan ---
-function renderWhyUs() {
-  const { whyUs } = CONTENT;
-  if (!whyUs) return;
+// --- Tantangan Keluarga (Page 2) ---
+function renderChallenges() {
+  const { challenges } = CONTENT;
 
-  setTextContent("why-badge", whyUs.sectionBadge);
-  setTextContent("why-title", whyUs.title);
+  const titleEl = document.getElementById("challenges-title");
+  if (titleEl) titleEl.textContent = challenges.title;
 
-  const grid = document.getElementById("why-grid");
+  const grid = document.getElementById("challenges-grid");
   if (!grid) return;
 
-  grid.innerHTML = whyUs.reasons.map(r => `
-    <div class="why-card" data-animate>
-      <div class="why-card__number">${r.number}</div>
-      <span class="why-card__icon">${r.icon}</span>
-      <h3 class="why-card__title">${r.title}</h3>
-      <p class="why-card__desc">${r.description}</p>
-    </div>
-  `).join("");
-}
-
-// --- Customer Problem & Solution ---
-function renderCustomerProblem() {
-  const { customerProblem } = CONTENT;
-  if (!customerProblem) return;
-
-  setTextContent("problem-badge",    customerProblem.sectionBadge);
-  setTextContent("problem-title",    customerProblem.title);
-  setTextContent("problem-subtitle", customerProblem.subtitle);
-  setTextContent("problem-intro",    customerProblem.problemsIntro);
-  setTextContent("solution-title",   customerProblem.solutionTitle);
-  setTextContent("solution-desc",    customerProblem.solutionDesc);
-
-  const grid = document.getElementById("problems-grid");
-  if (!grid) return;
-
-  grid.innerHTML = customerProblem.problems.map(p => `
-    <div class="problem-card">
-      <div class="problem-card__header">
-        <span class="problem-card__number">${p.number}</span>
-        <span class="problem-card__icon">${p.icon}</span>
+  grid.innerHTML = challenges.items.map(item => `
+    <div
+      class="challenge-card"
+      data-animate
+      style="background-image: url('${item.image}');"
+    >
+      <div class="challenge-card__overlay"></div>
+      <div class="challenge-card__body">
+        <div class="challenge-card__number">${item.number}</div>
+        <h3 class="challenge-card__title">${item.title}</h3>
+        <p class="challenge-card__description">${item.description}</p>
       </div>
-      <h3 class="problem-card__title">${p.title}</h3>
-      <p class="problem-card__desc">${p.description}</p>
     </div>
   `).join("");
 }
 
 // --- Cara Kerja ---
+// Kumpulan ikon SVG inline untuk step cards Page 3.
+// Setiap ikon sesuai konteks langkahnya (tidak menggunakan emoji).
+const STEP_ICONS = {
+  "icon-paket": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+    <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+    <line x1="12" y1="22.08" x2="12" y2="12"/>
+  </svg>`,
+
+  "icon-menu": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+    <line x1="16" y1="2" x2="16" y2="6"/>
+    <line x1="8" y1="2" x2="8" y2="6"/>
+    <line x1="3" y1="10" x2="21" y2="10"/>
+    <line x1="8" y1="14" x2="8" y2="14"/>
+    <line x1="12" y1="14" x2="12" y2="14"/>
+    <line x1="16" y1="14" x2="16" y2="14"/>
+    <line x1="8" y1="18" x2="8" y2="18"/>
+    <line x1="12" y1="18" x2="12" y2="18"/>
+  </svg>`,
+
+  "icon-kirim": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="1" y="3" width="15" height="13" rx="1"/>
+    <path d="M16 8h4l3 5v3h-7V8z"/>
+    <circle cx="5.5" cy="18.5" r="2.5"/>
+    <circle cx="18.5" cy="18.5" r="2.5"/>
+  </svg>`,
+
+  "icon-sajian": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+    <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+    <line x1="6" y1="1" x2="6" y2="4"/>
+    <line x1="10" y1="1" x2="10" y2="4"/>
+    <line x1="14" y1="1" x2="14" y2="4"/>
+  </svg>`,
+};
+
 function renderHowItWorks() {
   const { howItWorks } = CONTENT;
 
@@ -238,14 +267,16 @@ function renderHowItWorks() {
   stepsContainer.innerHTML = howItWorks.steps.map(step => `
     <div class="step-card" data-animate>
       <div class="step-card__number">${step.number}</div>
-      <span class="step-card__icon">${step.icon}</span>
+      <div class="step-card__icon" aria-hidden="true">
+        ${STEP_ICONS[step.iconId] || ""}
+      </div>
       <h3 class="step-card__title">${step.title}</h3>
       <p class="step-card__description">${step.description}</p>
     </div>
   `).join("");
 }
 
-// --- Paket ---
+// --- Paket (Accordion) ---
 function renderPackages() {
   const { packages } = CONTENT;
 
@@ -253,31 +284,131 @@ function renderPackages() {
   setTextContent("packages-title",    packages.title);
   setTextContent("packages-subtitle", packages.subtitle);
 
-  const grid = document.getElementById("packages-grid");
-  if (!grid) return;
+  const container = document.getElementById("packages-grid");
+  if (!container) return;
 
-  grid.innerHTML = packages.items.map(pkg => `
-    <div class="package-card ${pkg.isFeatured ? "package-card--featured" : ""}" data-animate>
-      ${pkg.isFeatured ? `<div class="package-card__badge">Paling Populer</div>` : ""}
-      <div class="package-card__type">${pkg.packageType}</div>
-      <h3 class="package-card__name">${pkg.name}</h3>
-      <div class="package-card__meta">${pkg.pax} · ${pkg.duration}</div>
-      <p class="package-card__description">${pkg.description}</p>
-      <ul class="package-card__features">
-        ${pkg.features.map(f => `<li>${f}</li>`).join("")}
-      </ul>
-      <div class="package-card__price">
-        <div class="package-card__price-label">${packages.priceNote}</div>
-        <div class="package-card__price-value">
-          ${pkg.price === "PRICE_PLACEHOLDER" ? "Akan diumumkan" : pkg.price}
+  container.innerHTML = packages.categories.map(cat => `
+    <div class="pricing-category" data-animate>
+
+      <!-- Header kategori -->
+      <div class="pricing-category__header">
+        <div class="pricing-category__info">
+          <h3 class="pricing-category__name">${cat.name}</h3>
+          <p class="pricing-category__pax">${cat.paxLabel}</p>
+          <p class="pricing-category__desc">${cat.description}</p>
         </div>
       </div>
-      <button
-        class="btn ${pkg.isFeatured ? "btn--primary" : "btn--secondary"} btn--full"
-        onclick="scrollToForm()"
-      >${pkg.ctaButton}</button>
-    </div>
+
+      <!-- Baris-baris paket accordion -->
+      <div class="pricing-plans">
+        ${cat.plans.map(plan => `
+          <div class="pricing-row" id="row-${plan.id}">
+
+            <!-- Baris yang bisa diklik -->
+            <button
+              class="pricing-row__trigger${plan.isPopular ? " pricing-row__trigger--popular" : ""}"
+              aria-expanded="false"
+              aria-controls="detail-${plan.id}"
+              onclick="togglePricingRow('${plan.id}')"
+            >
+              <div class="pricing-row__left">
+                ${plan.isPopular
+                  ? `<span class="pricing-row__popular-badge">Terpopuler</span>`
+                  : ""}
+                <span class="pricing-row__duration">${plan.duration}</span>
+              </div>
+
+              <div class="pricing-row__right">
+                <div class="pricing-row__price-block">
+                  ${plan.showStrike
+                    ? `<span class="pricing-row__price-strike">${packages.referencePrice}/pax</span>`
+                    : ""}
+                  <span class="pricing-row__price-pax">${plan.pricePerPax}<span class="pricing-row__price-unit">/pax</span></span>
+                </div>
+                <div class="pricing-row__chevron" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
+
+            <!-- Panel detail (tersembunyi saat awal) -->
+            <div class="pricing-row__detail" id="detail-${plan.id}" role="region" aria-hidden="true">
+              <div class="pricing-detail">
+
+                <p class="pricing-detail__desc">${plan.details.deskripsi}</p>
+
+                <div class="pricing-detail__specs">
+                  <div class="pricing-detail__spec">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                      <circle cx="9" cy="7" r="4"/>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                    <span>${plan.details.porsi}</span>
+                  </div>
+                  <div class="pricing-detail__spec">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+                      <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <span>${plan.details.menu}</span>
+                  </div>
+                </div>
+
+                <ul class="pricing-detail__benefits">
+                  ${plan.details.benefit.map(b => `<li>${b}</li>`).join("")}
+                </ul>
+
+                <div class="pricing-detail__total">
+                  <span class="pricing-detail__total-label">Total paket</span>
+                  <span class="pricing-detail__total-value">${plan.priceTotal}</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div><!-- /.pricing-row -->
+        `).join("")}
+      </div><!-- /.pricing-plans -->
+
+    </div><!-- /.pricing-category -->
   `).join("");
+}
+
+// Toggle accordion baris paket
+function togglePricingRow(planId) {
+  const row     = document.getElementById("row-" + planId);
+  const detail  = document.getElementById("detail-" + planId);
+  const trigger = row ? row.querySelector(".pricing-row__trigger") : null;
+  if (!row || !detail || !trigger) return;
+
+  const isOpen = row.classList.contains("is-open");
+
+  // Tutup semua baris yang terbuka di kategori yang sama
+  const category = row.closest(".pricing-category");
+  if (category) {
+    category.querySelectorAll(".pricing-row.is-open").forEach(openRow => {
+      openRow.classList.remove("is-open");
+      const openDetail  = openRow.querySelector(".pricing-row__detail");
+      const openTrigger = openRow.querySelector(".pricing-row__trigger");
+      if (openDetail)  { openDetail.style.maxHeight = "0"; openDetail.setAttribute("aria-hidden", "true"); }
+      if (openTrigger) { openTrigger.setAttribute("aria-expanded", "false"); }
+    });
+  }
+
+  // Buka atau tutup baris yang diklik
+  if (!isOpen) {
+    row.classList.add("is-open");
+    detail.style.maxHeight = detail.scrollHeight + "px";
+    detail.setAttribute("aria-hidden", "false");
+    trigger.setAttribute("aria-expanded", "true");
+  }
 }
 
 // --- Format Makanan ---
@@ -792,16 +923,14 @@ function showThankYouModal() {
 
 
 // ============================================================
-//  SCROLL TO FORM
+//  SCROLL TO FORM — Tombol "Daftar Early Access" di navbar
+//  Form sudah dihapus dari halaman. Tombol ini sekarang mengarah
+//  ke #faq (Page 6) agar pengguna tetap mendapat informasi.
 // ============================================================
 function scrollToForm() {
-  const form = document.getElementById("early-access-form");
-  if (form) {
-    form.scrollIntoView({ behavior: "smooth", block: "center" });
-    setTimeout(() => {
-      const firstInput = form.querySelector("input");
-      if (firstInput) firstInput.focus();
-    }, 600);
+  const target = document.getElementById("faq");
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 }
 
@@ -901,4 +1030,227 @@ function createImageHTML(src, alt, wrapperClass, imgClass, placeholderClass, ico
       </div>
     </div>
   `;
+}
+
+// ============================================================
+//  SECTION 5 — FORM EARLY ACCESS  (JSON-P submit)
+//  Semua fungsi menggunakan prefix s5 untuk menghindari konflik
+//  dengan fungsi lain di file ini.
+// ============================================================
+
+/**
+ * initSection5Form — Daftarkan event listener ke form Section 5.
+ * Dipanggil dari DOMContentLoaded. Null-safe: jika form tidak ada di halaman,
+ * fungsi ini diam saja tanpa error.
+ */
+function initSection5Form() {
+  const form = document.getElementById("s5-early-access-form");
+  if (!form) return;
+
+  // Hapus state error saat pengguna mulai mengetik ulang
+  form.addEventListener("input", function(ev) {
+    if (ev.target.classList.contains("s5-input")) {
+      clearS5FieldError(ev.target);
+    }
+  });
+
+  form.addEventListener("submit", handleS5FormSubmit);
+}
+
+/**
+ * handleS5FormSubmit — Handler utama submit form Section 5.
+ *
+ * Alur:
+ *   1. Reset semua state UI
+ *   2. Validasi & sanitasi input (trim, cek format)
+ *   3. Set loading state — cegah submit ganda via submitBtn.disabled
+ *   4. Panggil submitViaJSONP dan tunggu konfirmasi nyata dari server
+ *   5. Jika sukses: reset form, tampilkan pesan sukses hijau
+ *   6. Jika gagal/timeout: tampilkan error, JANGAN reset form
+ *   7. Finally: kembalikan tombol ke normal (timeout bukan sukses)
+ */
+async function handleS5FormSubmit(ev) {
+  ev.preventDefault();
+
+  const form      = ev.currentTarget;
+  const nameInput = document.getElementById("s5-input-name");
+  const igInput   = document.getElementById("s5-input-instagram");
+  const submitBtn = document.getElementById("s5-submit-btn");
+  const errorBox  = document.getElementById("s5-submit-error");
+  const successEl = document.getElementById("s5-success-msg");
+
+  // Reset semua state UI sebelum proses baru
+  clearS5FieldError(nameInput);
+  clearS5FieldError(igInput);
+  if (errorBox)  { errorBox.classList.remove("visible");  errorBox.textContent  = ""; }
+  if (successEl) { successEl.classList.remove("visible"); successEl.textContent = ""; }
+
+  // ── Validasi — trim spasi di awal dan akhir ──────────────────
+  const nameValue = nameInput.value.trim();
+  const igRaw     = igInput.value.trim();
+  const igClean   = igRaw.replace(/^@+/, "");   // hapus semua @ di awal
+
+  // Format username: huruf, angka, titik, underscore, maks 30 karakter
+  const igRegex = /^[a-zA-Z0-9._]{1,30}$/;
+  let   valid   = true;
+
+  if (!nameValue) {
+    showS5FieldError(nameInput, "s5-error-name", "Nama tidak boleh kosong.");
+    valid = false;
+  } else if (nameValue.length > 100) {
+    showS5FieldError(nameInput, "s5-error-name", "Nama terlalu panjang (maks 100 karakter).");
+    valid = false;
+  }
+
+  if (!igRaw) {
+    showS5FieldError(igInput, "s5-error-ig", "Username Instagram tidak boleh kosong.");
+    valid = false;
+  } else if (!igRegex.test(igClean)) {
+    showS5FieldError(igInput, "s5-error-ig",
+      "Format tidak valid. Gunakan huruf, angka, titik, atau underscore (maks 30 karakter).");
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  // ── Loading state — cegah submit ganda ───────────────────────
+  submitBtn.disabled    = true;
+  submitBtn.textContent = "Mengirim...";
+
+  try {
+    // submitViaJSONP menunggu konfirmasi NYATA dari server.
+    // Promise hanya resolve jika Apps Script mengembalikan {status:"success"}
+    // setelah appendRow berhasil dieksekusi.
+    await submitViaJSONP(nameValue, igClean);
+
+    // ── SUKSES NYATA ─────────────────────────────────────────
+    // Hanya sampai di sini jika server mengkonfirmasi data tersimpan.
+    form.reset();
+    if (successEl) {
+      successEl.textContent =
+        "✅ Berhasil didaftarkan! Kami akan menghubungi kamu saat Dapur Sepekan launching.";
+      successEl.classList.add("visible");
+    }
+
+  } catch (err) {
+    // ── ERROR atau TIMEOUT ────────────────────────────────────
+    // Tampilkan pesan error. Form TIDAK direset agar pengguna
+    // bisa memperbaiki dan mencoba lagi tanpa mengisi ulang.
+    console.error("[S5 Form]", err.message);
+    if (errorBox) {
+      errorBox.textContent = err.message || "Gagal mengirim. Silakan coba lagi.";
+      errorBox.classList.add("visible");
+    }
+
+  } finally {
+    // Selalu kembalikan tombol ke normal.
+    // Timeout masuk ke catch (bukan sukses) — finally hanya mengembalikan tombol.
+    submitBtn.disabled    = false;
+    submitBtn.textContent = "Daftar Early Access";
+  }
+}
+
+/**
+ * submitViaJSONP — Kirim data ke Apps Script via JSON-P dan tunggu konfirmasi nyata.
+ *
+ * Cara kerja:
+ *   1. Generate nama callback unik: "dsS5cb_<timestamp>_<random>"
+ *   2. Daftarkan sebagai fungsi global sementara di window
+ *   3. Inject <script src="GAS_URL?callback=...&nama=..."> ke <head>
+ *   4. Browser mendownload dan mengeksekusi respons Apps Script:
+ *        dsS5cb_1234({status:"success",...})
+ *      HANYA setelah appendRow selesai tanpa exception di server
+ *   5. window["dsS5cb_1234"] terpanggil → resolve atau reject Promise
+ *   6. cleanup() dipanggil: hapus window[cbName] dan script tag dari DOM
+ *
+ * Timeout:
+ *   15 detik — jika tidak ada respons, reject dengan pesan timeout.
+ *   Timeout bukan sukses: form tidak direset (handleS5FormSubmit menanganinya).
+ *
+ * Keterbatasan (didokumentasikan dengan jujur):
+ *   - Data dikirim via URL query string (GET), bukan request body
+ *   - URL dengan nama + username muncul di browser history dan server log Google
+ *   - Acceptable untuk nama + username Instagram (bukan password atau data keuangan)
+ *   - Jika butuh POST body + konfirmasi nyata → diperlukan proxy serverless
+ *     (contoh: Vercel Edge Function ~15 baris, lihat README.md)
+ *
+ * @param {string} nama     - Nama pendaftar (sudah di-trim, panjang max 100)
+ * @param {string} username - Username Instagram tanpa @ (sudah di-trim, panjang max 30)
+ * @returns {Promise}       - Resolve jika server konfirmasi sukses, reject jika error/timeout
+ */
+function submitViaJSONP(nama, username) {
+  return new Promise(function(resolve, reject) {
+    // Nama callback unik per submit — hindari tabrakan jika user submit berulang cepat
+    const cbName = "dsS5cb_" + Date.now() + "_" + Math.floor(Math.random() * 9999);
+    let   timerId;
+
+    // cleanup: hapus global callback dan <script> tag dari DOM
+    const cleanup = function() {
+      try { delete window[cbName]; } catch (_) {}
+      const el = document.getElementById(cbName);
+      if (el) el.remove();
+      clearTimeout(timerId);
+    };
+
+    // Callback global yang akan dipanggil Apps Script saat respons tiba
+    // Didefinisikan SEBELUM script tag diinject
+    window[cbName] = function(data) {
+      cleanup();
+      if (data && data.status === "success") {
+        resolve(data);
+      } else {
+        // Server merespons tapi melaporkan error (validasi gagal, ID salah, dll.)
+        reject(new Error(
+          (data && data.message) ? data.message : "Server menolak permintaan."
+        ));
+      }
+    };
+
+    // Timeout 15 detik
+    timerId = setTimeout(function() {
+      cleanup();
+      reject(new Error(
+        "Waktu tunggu habis (15 detik). Periksa koneksi internet dan coba lagi."
+      ));
+    }, 15000);
+
+    // Build URL — URLSearchParams otomatis encode karakter spesial
+    const params = new URLSearchParams({
+      callback: cbName,
+      nama:     nama,
+      username: username,
+      sumber:   "Dapur Sepekan Website",
+    });
+
+    // Inject <script> ke <head> — trigger HTTP GET ke Apps Script
+    const script   = document.createElement("script");
+    script.id      = cbName;
+    script.src     = SECTION5_APPS_SCRIPT_URL + "?" + params.toString();
+    script.onerror = function() {
+      // Network error: DNS gagal, server tidak terjangkau, dsb.
+      cleanup();
+      reject(new Error(
+        "Tidak dapat terhubung ke server. Pastikan koneksi internet aktif."
+      ));
+    };
+    document.head.appendChild(script);
+  });
+}
+
+// ── Helper: tampilkan error di bawah input ────────────────────────
+function showS5FieldError(input, errorId, msg) {
+  input.classList.add("error");
+  const el = document.getElementById(errorId);
+  if (el) { el.textContent = msg; el.classList.add("visible"); }
+}
+
+// ── Helper: hapus error dari input ───────────────────────────────
+function clearS5FieldError(input) {
+  input.classList.remove("error");
+  // Cari elemen error terdekat di parent .s5-field
+  const parent = input.closest ? input.closest(".s5-field") : input.parentElement;
+  if (parent) {
+    const el = parent.querySelector(".s5-field-error");
+    if (el) { el.classList.remove("visible"); el.textContent = ""; }
+  }
 }

@@ -241,7 +241,7 @@ Hapus seluruh blok `{...},` dari pertanyaan yang ingin dihapus.
 brand: {
   instagram: "@dapursepekan",
   instagramUrl: "https://instagram.com/dapursepekan",
-  email: "hello@dapursepekan.id",
+  email: "dsepekan@gmail.com",
 ```
 
 **Ganti dengan informasi resmi kamu.**
@@ -250,7 +250,7 @@ Cari juga bagian `footer:` > `contactItems:`:
 ```js
 contactItems: [
   { icon: "📸", label: "Instagram", value: "@dapursepekan", href: "https://instagram.com/dapursepekan" },
-  { icon: "✉️", label: "Email",     value: "hello@dapursepekan.id", href: "mailto:hello@dapursepekan.id" },
+  { icon: "✉️", label: "Email",     value: "dsepekan@gmail.com", href: "mailto:dsepekan@gmail.com" },
 ],
 ```
 

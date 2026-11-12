@@ -159,7 +159,7 @@ ul {
 }
 
 /* ============================================================
-   NAVBAR
+   NAVBAR  (referensi: background putih solid)
    ============================================================ */
 .navbar {
   position: fixed;
@@ -167,10 +167,8 @@ ul {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: rgba(253, 248, 242, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
+  background: #ffffff;          /* Putih solid seperti referensi */
+  border-bottom: 1px solid #eee;
   transition: box-shadow var(--transition);
 }
 
@@ -182,7 +180,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 72px;
+  height: 76px;   /* Dinaikkan sedikit dari 72px agar logo 56px nyaman */
   gap: 2rem;
 }
 
@@ -195,9 +193,9 @@ ul {
 
 .navbar__logo img,
 .navbar__logo-img {
-  height: 44px;
+  height: 56px;       /* Diperbesar dari 44px → 56px agar lebih jelas */
   width: auto;
-  max-width: 180px;
+  max-width: 220px;
   object-fit: contain;
   display: block;
 }
@@ -371,197 +369,346 @@ ul {
 }
 
 /* ============================================================
-   HERO SECTION
+   HERO SECTION  (Page 1) — Desain sesuai referensi
+   ============================================================
+   KOMPOSISI REFERENSI:
+   - Background: foto dapur biru navy memenuhi seluruh section
+   - Sisi kiri: gradient putih/terang menutupi 55% lebar → teks terbaca jelas
+   - Sisi kanan: foto produk makanan (bottom-aligned, menabrak batas bawah)
+   - Tombol CTA oranye besar di bawah area produk (kanan bawah)
+   - TIDAK ADA lead form di hero
    ============================================================ */
+
+/* ── Wrapper section ── */
 #beranda {
-  padding-top: calc(72px + 3rem); /* offset navbar */
-  padding-bottom: var(--section-padding-y);
-  background: linear-gradient(135deg, var(--color-cream) 0%, #f0e8dc 100%);
-  min-height: 100svh;
+  position: relative;
+  min-height: calc(100svh - 76px);
+  margin-top: 76px;          /* offset navbar */
+  overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  /* Fallback bg saat foto dapur belum ada */
+  background: #1B2A4A;
 }
 
+/* ── Background foto produk ── */
+/* hero-Page1-original.png: area kosong biru muda di kiri, produk + dapur navy di kanan.
+   Tidak ada teks bawaan — aman digunakan langsung sebagai background.
+   background-size: cover memenuhi area, posisi right agar produk selalu terlihat. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('assets/hero-Page1-original.png');
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+/* ── Gradient overlay tipis di kiri agar teks HTML terbaca ──
+   Gambar tidak memiliki teks bawaan — gradient hanya untuk kontras teks.
+   Area kiri foto sudah berwarna biru muda terang, cukup overlay ringan.
+   Produk di kanan tidak boleh tertutup sama sekali. */
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,0.55) 0%,    /* putih sangat tipis — teks tetap terbaca */
+    rgba(255,255,255,0.45) 25%,
+    rgba(255,255,255,0.20) 42%,   /* mulai fade cepat */
+    rgba(255,255,255,0)    58%    /* transparan — produk terlihat penuh */
+  );
+}
+
+/* ── Container di atas layer background ── */
+.hero__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+/* ── Grid dua kolom: 55% teks kiri + 45% produk kanan ── */
 .hero__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 55% 45%;
   align-items: center;
-  gap: 4rem;
+  min-height: calc(100svh - 76px);
+  width: 100%;
+  gap: 0;
 }
 
+/* ══════════════════════════════════════
+   KOLOM KIRI — Teks
+   ══════════════════════════════════════ */
 .hero__content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 0.85rem;
+  padding: 3rem 2.5rem 3rem 0;
 }
 
+/* Badge "– COMING SOON": dark navy pill */
 .hero__badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background: var(--color-navy);
-  color: var(--color-white);
-  font-size: var(--font-size-xs);
+  gap: 0.4rem;
+  background: #1B2A4A;
+  color: #ffffff;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  padding: 0.4em 1.1em;
+  padding: 0.45em 1.1em;
   border-radius: var(--radius-full);
   width: fit-content;
 }
 
 .hero__badge::before {
-  content: "●";
-  color: var(--color-orange);
-  animation: pulse 2s infinite;
+  content: "–";
+  opacity: 0.75;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.hero__headline {
-  font-size: clamp(2rem, 4vw, var(--font-size-4xl));
-  font-weight: 900;
-  color: var(--color-navy);
-  line-height: 1.15;
-}
-
-.hero__headline em {
-  font-style: normal;
-  color: var(--color-orange);
-}
-
-.hero__subheadline {
-  font-size: var(--font-size-md);
-  color: var(--color-text-medium);
-  line-height: 1.75;
-  max-width: 480px;
-}
-
-/* Tagline di bawah badge */
-.hero__tagline {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--color-orange);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 0.25rem;
-}
-
-/* Pertanyaan hook di bawah headline */
-.hero__question {
-  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+/* Eyebrow: "YOUR FAMILY HOME-COOKED MEAL SOLUTION" — oranye uppercase */
+.hero__eyebrow {
+  font-size: 0.8rem;
   font-weight: 800;
-  color: var(--color-navy);
+  color: var(--color-orange);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0;
   line-height: 1.4;
 }
 
-/* Intro brand */
-.hero__brand-intro {
-  font-size: var(--font-size-md);
-  font-weight: 700;
-  color: var(--color-navy);
+/* Headline dua baris — Fredoka One: playful, rounded, bold */
+.hero__headline {
+  font-family: 'Fredoka One', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  line-height: 1.1;
+  margin: 0;
+  font-weight: 400;   /* Fredoka One hanya punya weight 400, sudah bold secara karakter */
 }
 
-.hero__brand-intro strong {
+/* Baris 1: "A NEW WAY TO ENJOY" — navy */
+.hero__headline-line1 {
+  display: block;
+  color: #1B2A4A;
+}
+
+/* Baris 2: "FAMILY MEALS!" — oranye + underline tebal */
+.hero__headline-line2 {
+  display: block;
+  color: var(--color-orange);
+  font-style: normal;    /* Fredoka One tidak perlu italic */
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 4px;
+  text-underline-offset: 6px;
+}
+
+/* Sub-headline: bold navy */
+.hero__subhead {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  font-weight: 800;
+  color: #1B2A4A;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Intro: "Kenalan yuk dengan Dapur Sepekan!" — navy bold besar */
+.hero__intro {
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 800;
+  color: #1B2A4A;
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* "Dapur Sepekan!" dalam intro — oranye */
+.hero__intro-brand {
   color: var(--color-orange);
 }
 
-/* Deskripsi produk */
+/* Deskripsi paragraf — abu gelap, ringan */
 .hero__description {
-  font-size: var(--font-size-md);
-  color: var(--color-text-medium);
-  line-height: 1.75;
+  font-size: 1rem;
+  color: #3a3a3a;
+  line-height: 1.72;
+  max-width: 520px;
+  margin: 0;
 }
 
-/* Highlight (halal, no MSG) */
-.hero__highlight {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: #2d7a3a;
-  background: #edf7ee;
-  border-left: 3px solid #2d7a3a;
-  padding: 0.6rem 1rem;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  line-height: 1.5;
+/* Area badge produk — tiga gambar berjajar horizontal */
+.hero__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 0.5rem;
 }
 
-/* Closing tagline */
-.hero__closing {
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  color: var(--color-text-medium);
-  font-style: italic;
+/* Container tiap badge — background putih dengan border tipis */
+.hero__badge-pill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.90);
+  border: 1.5px solid rgba(0,0,0,0.08);
+  border-radius: var(--radius-md);
+  padding: 0.4rem 0.6rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
-/* Wrapper gambar hero yang di-inject oleh script.js */
-.hero__image-wrapper {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.hero__image {
-  width: 100%;
-  height: 240px;
-  object-fit: cover;
+/* Gambar badge — tinggi konsisten, lebar otomatis */
+.hero__badge-img {
+  height: 44px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
   display: block;
-  border-radius: var(--radius-lg);
 }
 
-/* Hero image placeholder (mobile) */
-.hero__image-placeholder {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #e8ddd0, #d8cec0);
-  border-radius: var(--radius-lg);
+/* ══════════════════════════════════════
+   KOLOM KANAN — Produk + CTA
+   ══════════════════════════════════════ */
+.hero__product-col {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: calc(100svh - 76px);
+  padding-bottom: 2rem;
+  position: relative;
+}
+
+/* Gambar produk — bottom-aligned, mengisi penuh kolom kanan */
+.hero__product {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
   justify-content: center;
-  gap: 1rem;
-  color: var(--color-text-light);
+  width: 100%;
 }
 
-.hero__image-placeholder .placeholder-icon {
-  font-size: 2.5rem;
-  opacity: 0.5;
+.hero__product-img {
+  max-height: 72vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  /* Drop-shadow ringan agar produk terlihat melayang */
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,0.25));
 }
 
-.hero__image-placeholder p {
-  font-size: var(--font-size-sm);
-  text-align: center;
-  padding: 0 2rem;
-  opacity: 0.7;
+/* Tombol CTA — oranye besar pill, kanan bawah */
+.hero__cta-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5rem;
 }
 
-/* ============================================================
-   LEAD FORM
-   ============================================================ */
-.hero__form-card {
+.btn--hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-orange);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  font-size: 1.05rem;
+  padding: 1rem 2.2rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(232, 102, 42, 0.35);
+  white-space: nowrap;
+}
+
+.btn--hero-cta::after {
+  content: "›";
+  font-size: 1.4em;
+  line-height: 1;
+  font-weight: 900;
+  margin-left: 0.1em;
+}
+
+.btn--hero-cta:hover {
+  background: var(--color-orange-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(232, 102, 42, 0.45);
+}
+
+/* ── Class lama yang dipertahankan untuk kompatibilitas ── */
+.hero__image-mobile  { display: none; }
+.hero__image-wrapper { width: 100%; border-radius: var(--radius-lg); overflow: hidden; }
+.hero__image         { width: 100%; height: 240px; object-fit: cover; border-radius: var(--radius-lg); }
+.hero__image-placeholder {
+  width: 100%; height: 200px;
+  background: linear-gradient(135deg, #e8ddd0, #d8cec0);
+  border-radius: var(--radius-lg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem; color: var(--color-text-light);
+}
+.hero__image-placeholder .placeholder-icon { font-size: 2.5rem; opacity: 0.5; }
+.hero__image-placeholder p { font-size: var(--font-size-sm); text-align: center; padding: 0 2rem; opacity: 0.7; }
+
+/* ── Form card (dipertahankan untuk section #form-section) ── */
+.hero__form-card,
+.form-section-card {
   background: var(--color-white);
   border-radius: var(--radius-lg);
-  padding: 2.5rem;
+  padding: 2rem 2.5rem;
   box-shadow: var(--shadow-xl);
   border: 1px solid var(--color-border);
 }
 
-.hero__form-card .form-title {
+.hero__form-card .form-title,
+.form-section-title {
   font-size: var(--font-size-xl);
   font-weight: 800;
   color: var(--color-navy);
   margin-bottom: 0.5rem;
 }
 
-.hero__form-card .form-subtitle {
+.hero__form-card .form-subtitle,
+.form-section-subtitle {
   font-size: var(--font-size-sm);
   color: var(--color-text-medium);
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
+/* ── Section form terpisah (setelah hero) ── */
+.form-section-wrapper {
+  background: var(--color-bg-section);
+  padding: var(--section-padding-y) 0;
+}
+
+.form-section-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.form-section-text {
+  padding-top: 1rem;
+}
+
+/* ── Gambar hero lama (kompatibilitas) ── */
+.hero__bg-fallback { display: none; }
+
+/* ============================================================
+   LEAD FORM
+   ============================================================ */
 .form-group {
   margin-bottom: 1.25rem;
 }
@@ -654,20 +801,148 @@ ul {
   color: var(--color-orange-light);
 }
 
-/* Gambar hero — tampil di bawah teks pada mobile,
-   tersembunyi pada desktop (karena hero hanya 2 kolom: teks + form) */
-.hero__image-mobile {
-  display: none; /* Tersembunyi di desktop */
+/* ============================================================
+   TANTANGAN KELUARGA — Page 2
+   Hanya headline + 3 kartu. Tidak ada badge, intro, atau banner.
+   ============================================================ */
+#tantangan {
+  padding: var(--section-padding-y) 0;
+  background: var(--color-bg-section);
+}
+
+/* Header: hanya headline, tanpa badge atau paragraf pembuka */
+.challenges__header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.challenges__title {
+  font-size: clamp(1.6rem, 3vw, var(--font-size-3xl));
+  font-weight: 800;
+  color: var(--color-navy);
+  line-height: 1.25;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Grid 3 kartu — sejajar dan sama tinggi pada desktop */
+.challenges__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  align-items: stretch;
+}
+
+/* Kartu tantangan — background gambar penuh */
+.challenge-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* background-image di-set inline via script.js */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.challenge-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Gradient overlay — gelap di bawah agar teks terbaca */
+.challenge-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0)    0%,
+    rgba(0, 0, 0, 0.15) 35%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  border-radius: inherit;
+}
+
+/* Konten teks berada di atas overlay */
+.challenge-card__body {
+  position: relative;
+  z-index: 1;
+  padding: 1.5rem 1.75rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.challenge-card__number {
+  font-size: var(--font-size-xs);
+  font-weight: 900;
+  color: var(--color-orange);
+  letter-spacing: 0.12em;
+}
+
+.challenge-card__title {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.challenge-card__description {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.65;
 }
 
 /* ============================================================
-   CARA KERJA
+   CARA KERJA  (Page 3)
+   Background: assets/background Page 3.png
+   Ikon: SVG inline (tidak ada emoji)
    ============================================================ */
 #cara-kerja {
+  position: relative;
   padding: var(--section-padding-y) 0;
-  background: var(--color-white);
+  /* Background gambar penuh — nama file sesuai yang ada di assets/ */
+  background-image: url('assets/background Page 3.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
 }
 
+/* Overlay di atas background agar teks tetap terbaca */
+#cara-kerja::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 42, 74, 0.72); /* navy semi-transparan */
+  z-index: 0;
+}
+
+/* Semua konten di atas overlay */
+#cara-kerja .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Section badge & judul — warna terang di atas bg gelap */
+#cara-kerja .section-badge {
+  background: rgba(255,255,255,0.15);
+  color: #ffffff;
+}
+
+#cara-kerja .section-title {
+  color: #ffffff;
+}
+
+#cara-kerja .section-subtitle {
+  color: rgba(255,255,255,0.80);
+}
+
+/* Grid 4 langkah */
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -685,165 +960,397 @@ ul {
 .step-card:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 3.5rem;
+  top: 4rem;              /* sejajar tengah lingkaran ikon */
   right: -1rem;
   width: 2rem;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-orange), transparent);
+  background: linear-gradient(90deg, var(--color-orange), rgba(232,102,42,0));
 }
 
+/* Nomor langkah */
 .step-card__number {
   font-size: var(--font-size-xs);
   font-weight: 900;
   color: var(--color-orange);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.75rem;
-  opacity: 0.7;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.85rem;
 }
 
+/* Lingkaran ikon SVG */
 .step-card__icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  display: block;
-  line-height: 1;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 1.25rem;
+  background: rgba(255,255,255,0.12);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Pastikan tidak meneruskan gaya font ke SVG */
+  font-size: 0;
+}
+
+/* SVG di dalam lingkaran — warna putih */
+.step-card__icon svg {
+  width: 34px;
+  height: 34px;
+  color: #ffffff;
+  stroke: #ffffff;
+  flex-shrink: 0;
 }
 
 .step-card__title {
   font-size: var(--font-size-lg);
   font-weight: 800;
-  color: var(--color-navy);
+  color: #ffffff;
   margin-bottom: 0.75rem;
+  line-height: 1.3;
 }
 
 .step-card__description {
   font-size: var(--font-size-sm);
-  color: var(--color-text-medium);
+  color: rgba(255,255,255,0.80);
   line-height: 1.7;
 }
 
 /* ============================================================
-   PAKET LANGGANAN
+   PAKET LANGGANAN — Accordion Pricing
    ============================================================ */
 #paket {
   padding: var(--section-padding-y) 0;
-  background: var(--color-bg-section);
+  /* Background krem hangat — sedikit lebih pekat dari --color-bg-section */
+  background: #EDE8DF;
+  position: relative;
+  overflow: hidden;   /* ornamen tidak keluar dari batas section */
 }
 
-.packages-grid {
+/* ── Ornamen dekoratif SVG — semua absolut, z-index 0, pointer-events none ── */
+.paket-deco {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* Lengkung navy kiri atas */
+.paket-deco--arc-tl {
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 320px;
+}
+
+/* Lengkung navy kanan bawah */
+.paket-deco--arc-br {
+  bottom: 0;
+  right: 0;
+  width: 320px;
+  height: 320px;
+}
+
+/* Line-art daun kiri bawah */
+.paket-deco--flora-l {
+  bottom: 0;
+  left: 0;
+  width: 180px;
+  height: 300px;
+}
+
+/* Line-art sayuran kanan (vertikal) */
+.paket-deco--flora-r {
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 160px;
+  height: 360px;
+}
+
+/* Aksen oranye sudut kiri atas */
+.paket-deco--accent-tl {
+  top: 1.5rem;
+  left: 1.5rem;
+  width: 48px;
+  height: 48px;
+}
+
+/* Aksen oranye sudut kanan bawah */
+.paket-deco--accent-br {
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+}
+
+/* Blob krem abstrak — sepanjang bawah section */
+.paket-deco--blob {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 240px;
+}
+
+/* Pastikan container dan konten berada di atas ornamen */
+#paket .container,
+#paket .section-header,
+#packages-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Container: dua kolom kategori berdampingan di desktop */
+#packages-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
   margin-top: 3rem;
   align-items: start;
 }
 
-.package-card {
+/* ── Kategori (Solo / Family) ── */
+.pricing-category {
   background: var(--color-white);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  border: 2px solid var(--color-border);
-  position: relative;
-  transition: transform var(--transition), box-shadow var(--transition);
+  border: 1.5px solid var(--color-border);
+  overflow: hidden;
 }
 
-.package-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+.pricing-category__header {
+  padding: 1.75rem 1.75rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
 }
 
-.package-card--featured {
-  border-color: var(--color-orange);
-  box-shadow: var(--shadow-lg);
-  transform: scale(1.02);
-}
-
-.package-card--featured:hover {
-  transform: scale(1.02) translateY(-4px);
-}
-
-.package-card__badge {
-  position: absolute;
-  top: -0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-orange);
-  color: var(--color-white);
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  padding: 0.25em 1em;
-  border-radius: var(--radius-full);
-  white-space: nowrap;
-}
-
-.package-card__type {
-  font-size: var(--font-size-xs);
-  font-weight: 700;
-  color: var(--color-orange);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-}
-
-.package-card__name {
+.pricing-category__name {
   font-size: var(--font-size-xl);
   font-weight: 800;
   color: var(--color-navy);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
-.package-card__meta {
+.pricing-category__pax {
   font-size: var(--font-size-xs);
-  color: var(--color-text-light);
-  margin-bottom: 1rem;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--color-orange);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
 }
 
-.package-card__description {
+.pricing-category__desc {
   font-size: var(--font-size-sm);
   color: var(--color-text-medium);
-  line-height: 1.65;
-  margin-bottom: 1.25rem;
+  line-height: 1.6;
 }
 
-.package-card__features {
+/* ── Daftar baris paket ── */
+.pricing-plans {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
 }
 
-.package-card__features li {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-medium);
+/* ── Satu baris paket ── */
+.pricing-row {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing-row:last-child {
+  border-bottom: none;
+}
+
+/* ── Tombol trigger baris ── */
+.pricing-row__trigger {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  text-align: left;
+  transition: background var(--transition);
 }
 
-.package-card__features li::before {
-  content: "✓";
+.pricing-row__trigger:hover {
+  background: var(--color-bg-section);
+}
+
+/* Baris terpopuler — sedikit dibedakan */
+.pricing-row__trigger--popular {
+  background: rgba(232, 102, 42, 0.04);
+}
+
+.pricing-row__trigger--popular:hover {
+  background: rgba(232, 102, 42, 0.09);
+}
+
+/* Kiri: badge populer + durasi */
+.pricing-row__left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.pricing-row__popular-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
   color: var(--color-orange);
-  font-weight: 900;
+  background: var(--color-orange-pale);
+  border: 1px solid rgba(232,102,42,0.25);
+  padding: 0.15em 0.65em;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pricing-row__duration {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+/* Kanan: blok harga + chevron */
+.pricing-row__right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   flex-shrink: 0;
 }
 
-.package-card__price {
-  margin-bottom: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--color-border);
+.pricing-row__price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.1rem;
 }
 
-.package-card__price-label {
+.pricing-row__price-strike {
   font-size: var(--font-size-xs);
   color: var(--color-text-light);
+  text-decoration: line-through;
+  font-weight: 500;
+}
+
+.pricing-row__price-pax {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  color: var(--color-orange);
+  line-height: 1.1;
+}
+
+.pricing-row__price-unit {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-orange);
+  opacity: 0.8;
+}
+
+/* Chevron — rotasi saat terbuka */
+.pricing-row__chevron {
+  color: var(--color-text-light);
+  display: flex;
+  align-items: center;
+  transition: transform var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+
+.pricing-row.is-open .pricing-row__chevron {
+  transform: rotate(180deg);
+  color: var(--color-orange);
+}
+
+/* ── Panel detail (accordion body) ── */
+.pricing-row__detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.pricing-detail {
+  padding: 0 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 1.25rem;
+}
+
+.pricing-detail__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-medium);
+  line-height: 1.65;
+}
+
+/* Spesifikasi (porsi, menu) */
+.pricing-detail__specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pricing-detail__spec {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-medium);
   font-weight: 600;
 }
 
-.package-card__price-value {
-  font-size: var(--font-size-lg);
-  font-weight: 800;
+.pricing-detail__spec svg {
+  flex-shrink: 0;
+  color: var(--color-orange);
+  stroke: var(--color-orange);
+}
+
+/* Benefit list */
+.pricing-detail__benefits {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pricing-detail__benefits li {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-medium);
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.pricing-detail__benefits li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--color-orange);
+  font-weight: 900;
+}
+
+/* Total harga */
+.pricing-detail__total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  background: var(--color-bg-section);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  margin-top: 0.25rem;
+}
+
+.pricing-detail__total-label {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
   color: var(--color-navy);
-  font-style: italic;
+}
+
+.pricing-detail__total-value {
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+  color: var(--color-navy);
 }
 
 /* ============================================================
@@ -1320,11 +1827,15 @@ ul {
 }
 
 .footer__brand-logo {
-  height: 38px;
+  height: 60px;        /* diperbesar dari 38px agar jelas */
   width: auto;
+  max-width: 200px;
+  object-fit: contain;
   margin-bottom: 1rem;
-  /* Membuat logo terlihat di background gelap */
-  filter: brightness(0) invert(1);
+  display: block;
+  /* Hapus filter invert — logo berwarna asli lebih terlihat di bg navy */
+  /* Tambah drop-shadow putih tipis untuk kontras */
+  filter: drop-shadow(0 1px 3px rgba(255,255,255,0.15));
 }
 
 .footer__brand-name {
@@ -1409,7 +1920,7 @@ ul {
   font-size: var(--font-size-xs);
   cursor: pointer;
   font-family: var(--font-primary);
-  transition: color var(--transition);
+  transition: co3lor var(--transition);
 }
 
 .footer__privacy-btn:hover {
@@ -1584,12 +2095,40 @@ ul {
    RESPONSIVE — TABLET (max 1024px)
    ============================================================ */
 @media (max-width: 1024px) {
-  .packages-grid {
+  /* Hero — tablet: grid 2 kolom, produk sedikit lebih kecil */
+  .hero__grid {
+    grid-template-columns: 58% 42%;
+  }
+
+  .hero__product-img {
+    max-height: 60vh;
+  }
+
+  .form-section-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Tantangan — tablet: 2 kolom, kartu ketiga di tengah baris bawah */
+  .challenges__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .package-card--featured {
-    transform: none;
+  /* Kartu ketiga berdiri sendiri di baris kedua, tengahkan */
+  .challenges__grid .challenge-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Paket accordion — tablet: tetap 2 kolom tapi lebih compact */
+  #packages-grid {
+    gap: 1.25rem;
+  }
+
+  .pricing-row__trigger {
+    padding: 1rem 1.5rem;
   }
 
   .steps-grid {
@@ -1622,36 +2161,70 @@ ul {
   /* Logo sedikit lebih kecil di mobile agar navbar tidak sesak */
   .navbar__logo img,
   .navbar__logo-img {
-    height: 36px;
+    height: 44px;
   }
 
-  /* Hero */
+  /* Hero — mobile: susun vertikal, produk di atas teks */
   #beranda {
-    padding-top: calc(72px + 2rem);
     min-height: auto;
-    padding-bottom: 2.5rem;
   }
 
   .hero__grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    min-height: auto;
   }
 
-  /* Tampilkan gambar hero di mobile */
-  .hero__image-mobile {
-    display: block;
+  /* Produk tampil di atas teks */
+  .hero__product-col {
+    min-height: 50vw;
+    padding-bottom: 1rem;
+    order: -1;
   }
 
-  .hero__image-mobile img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    border-radius: var(--radius-lg);
+  .hero__product-img {
+    max-height: 50vw;
   }
 
-  .hero__image-mobile .hero__image-placeholder {
-    height: 200px;
-    border-radius: var(--radius-lg);
+  .hero__content {
+    padding: 1.5rem 0 2rem;
+    gap: 0.75rem;
+  }
+
+  /* Gradient bg: overlay di mobile — lebih solid agar teks terbaca di atas foto */
+  .hero__bg::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.60) 0%,
+      rgba(255,255,255,0.75) 50%,
+      rgba(255,255,255,0.55) 100%
+    );
+  }
+
+  /* Badge gambar — sedikit lebih kecil di mobile */
+  .hero__badge-img {
+    height: 36px;
+  }
+
+  /* Form section mobile — tidak digunakan setelah form dihapus, dipertahankan sebagai fallback */
+  .form-section-inner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-section-card {
+    padding: 1.5rem;
+  }
+
+  /* Tantangan keluarga — mobile: 1 kolom penuh */
+  .challenges__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hapus override kartu ketiga dari tablet agar tidak berlaku di mobile */
+  .challenges__grid .challenge-card:last-child {
+    grid-column: auto;
+    max-width: none;
+    margin: 0;
   }
 
   /* Cara kerja */
@@ -1664,9 +2237,18 @@ ul {
     display: none !important;
   }
 
-  /* Paket */
-  .packages-grid {
+  /* Paket accordion — 1 kolom di mobile */
+  #packages-grid {
     grid-template-columns: 1fr;
+  }
+
+  .pricing-row__trigger {
+    padding: 1rem 1.25rem;
+  }
+
+  .pricing-detail {
+    padding: 0 1.25rem 1.25rem;
+    padding-top: 1rem;
   }
 
   /* Format */
@@ -1737,4 +2319,268 @@ ul {
   clip: rect(0,0,0,0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ============================================================
+   SECTION 5 — AREA LAYANAN & EARLY ACCESS FORM
+   Semua selector pakai prefix s5-. Tidak ada konflik dengan section lain.
+   ============================================================ */
+#area-layanan {
+  position: relative;
+  padding: var(--section-padding-y) 0;
+  background: #F5EFE6;   /* krem lebih terang, berbeda dari #EDE8DF milik #paket */
+  overflow: hidden;
+}
+
+/* Dekorasi topografi — absolut, di belakang konten */
+.s5-deco {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.s5-deco--topo {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Konten di atas dekorasi */
+.s5-container,
+.s5-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Grid 50:50 — dua kolom berdampingan di desktop */
+.s5-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+/* ── Kolom peta ── */
+.s5-map-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.s5-map-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 800;
+  color: var(--color-navy);
+  line-height: 1.2;
+}
+
+.s5-map-desc {
+  font-size: var(--font-size-base);
+  color: var(--color-text-medium);
+  line-height: 1.7;
+}
+
+/* Wrapper peta — aspect-ratio 4:3 responsif tanpa height fixed */
+.s5-map-wrap {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 3;
+}
+
+.s5-map-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── Kolom form ── */
+.s5-form-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.s5-form-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Badge "COMING SOON!" */
+.s5-badge {
+  display: inline-block;
+  background: var(--color-orange-pale);
+  color: var(--color-orange);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 0.3em 0.9em;
+  border-radius: var(--radius-full);
+  width: fit-content;
+  border: 1px solid rgba(232, 102, 42, 0.2);
+}
+
+.s5-form-title {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-navy);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Pesan sukses — hijau, muncul hanya setelah konfirmasi nyata dari server */
+.s5-success-msg {
+  display: none;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: var(--radius-md);
+  color: #166534;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  padding: 0.85rem 1rem;
+  line-height: 1.5;
+}
+.s5-success-msg.visible { display: block; }
+
+/* Pesan error submit — merah */
+.s5-submit-error {
+  display: none;
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: var(--radius-md);
+  color: #c53030;
+  font-size: var(--font-size-sm);
+  padding: 0.85rem 1rem;
+  line-height: 1.5;
+}
+.s5-submit-error.visible { display: block; }
+
+/* Field */
+.s5-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Label — min 16px sesuai ketentuan */
+.s5-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+/* Input — tinggi 50px, font 16px */
+.s5-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 1rem;
+  border: 1.5px solid var(--color-border-dark);
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  background: var(--color-cream);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.s5-input::placeholder {
+  font-size: 1rem;
+  color: var(--color-text-light);
+}
+.s5-input:focus {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 0 3px rgba(232, 102, 42, 0.14);
+  background: var(--color-white);
+}
+.s5-input.error {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.10);
+}
+
+/* Pesan error per field */
+.s5-field-error {
+  display: none;
+  font-size: var(--font-size-xs);
+  color: #e53e3e;
+  font-weight: 600;
+}
+.s5-field-error.visible { display: block; }
+
+/* Tombol submit */
+.s5-submit-btn {
+  width: 100%;
+  height: 50px;
+  background: var(--color-orange);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: 800;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+  margin-top: 0.25rem;
+}
+.s5-submit-btn:hover:not(:disabled) {
+  background: var(--color-orange-light);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(232, 102, 42, 0.35);
+}
+.s5-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Privacy & tagline */
+.s5-privacy {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  text-align: center;
+}
+.s5-privacy-link {
+  background: none;
+  border: none;
+  color: var(--color-orange);
+  font-weight: 700;
+  font-size: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-family: inherit;
+}
+
+.s5-tagline {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  text-align: center;
+  font-style: italic;
+  margin: 0;
+}
+
+/* ── Responsive tablet ≤1024px ── */
+@media (max-width: 1024px) {
+  .s5-grid { gap: 2rem; }
+}
+
+/* ── Responsive mobile ≤768px — satu kolom, peta di atas form ── */
+@media (max-width: 768px) {
+  .s5-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .s5-form-card {
+    padding: 1.75rem 1.25rem;
+  }
 }

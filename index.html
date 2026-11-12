@@ -16,11 +16,11 @@
   <!-- Favicon — diatur oleh script.js hanya jika file sudah ada di assets/ -->
   <!-- <link id="favicon" rel="icon" type="image/png" href="assets/favicon.png" /> -->
 
-  <!-- Google Fonts — Plus Jakarta Sans -->
+  <!-- Google Fonts — Plus Jakarta Sans (body) + Fredoka One (headline hero) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet"
   />
 
@@ -88,178 +88,110 @@
 
 
   <!-- =========================================================
-       HERO SECTION + LEAD FORM
-       Keduanya disatukan dalam satu baris (grid) pada desktop
+       HERO SECTION  (Page 1)
+       Layout mengikuti referensi:
+       - Background: gradient putih/terang di kiri → foto dapur biru di kanan
+       - Kolom kiri: semua teks, badge produk
+       - Kolom kanan: foto produk makanan (bottom-aligned)
+       - Tombol CTA oranye di bawah area produk
+       - TIDAK ADA lead form di Page 1
        ========================================================= -->
   <section id="beranda" aria-label="Hero - Dapur Sepekan">
-    <div class="container">
+
+    <!-- Background foto dapur — diisi via CSS background-image -->
+    <!-- File: assets/hero-bg.jpg — uncomment di style.css setelah file tersedia -->
+    <div class="hero__bg" aria-hidden="true"></div>
+
+    <div class="container hero__container">
       <div class="hero__grid">
 
-        <!-- Kolom kiri: konten hero + gambar (pada mobile) -->
+        <!-- ── KOLOM KIRI: Semua teks ── -->
         <div class="hero__content">
-          <span class="hero__badge" id="hero-badge">COMING SOON</span>
-          <p class="hero__tagline" id="hero-tagline">Your Family Home-Cooked Meal Solution</p>
 
+          <!-- Badge "– COMING SOON" -->
+          <span class="hero__badge" id="hero-badge">Coming Soon</span>
+
+          <!-- Eyebrow oranye uppercase -->
+          <p class="hero__eyebrow" id="hero-eyebrow"><!-- diisi script.js --></p>
+
+          <!-- Headline: "A new way to enjoy" (line 1, navy)
+                         "family meals"       (line 2, oranye italic + underline) -->
           <h1 class="hero__headline" id="hero-headline">
-            A NEW WAY TO ENJOY FAMILY MEALS
+            <!-- diisi script.js -->
           </h1>
 
-          <p class="hero__question" id="hero-question">
-            Setiap Hari Mikirin Menu? Saatnya Punya Solusi!
-          </p>
+          <!-- Sub-headline navy bold -->
+          <p class="hero__subhead" id="hero-subhead"><!-- diisi script.js --></p>
 
-          <p class="hero__subheadline" id="hero-subheadline">
-            Ingin keluarga tetap menikmati masakan rumahan yang enak dan bervariasi, tanpa harus repot memikirkan menu dan memasak setiap hari?
-          </p>
+          <!-- Kalimat pengenalan brand -->
+          <p class="hero__intro" id="hero-intro"><!-- diisi script.js --></p>
 
-          <p class="hero__brand-intro" id="hero-brand-intro">
-            Kenalan dengan <strong>Dapur Sepekan!</strong>
-          </p>
+          <!-- Deskripsi paragraf -->
+          <p class="hero__description" id="hero-description"><!-- diisi script.js --></p>
 
-          <p class="hero__description" id="hero-description">
-            Solusi paket menu rumahan mingguan dengan porsi keluarga, pilihan hidangan yang bervariasi, dan praktis disimpan serta disajikan kapan saja.
-          </p>
-
-          <p class="hero__highlight" id="hero-highlight">
-            🌿 Dibuat tanpa bahan pengawet dan MSG, serta terjamin halal.
-          </p>
-
-          <p class="hero__closing" id="hero-closing">
-            ✨ Serasa punya home chef, untuk hidangan keluarga setiap hari!
-          </p>
-
-          <!-- Gambar hero (mobile) -->
-          <div id="hero-image-container" class="hero__image-mobile">
-            <!-- Diisi oleh script.js -->
+          <!-- 3 Badge: Halal, Tanpa MSG, Tanpa Bahan Pengawet -->
+          <!-- ⚠️ Lihat content.js sebelum mengaktifkan klaim yang belum dikonfirmasi -->
+          <div class="hero__badges" id="hero-product-badges">
+            <!-- diisi script.js -->
           </div>
+
         </div><!-- /.hero__content -->
 
-        <!-- Kolom kanan: Lead Form -->
-        <div class="hero__form-card" id="form-card">
-          <h2 class="form-title" id="form-title">Jadilah yang Pertama</h2>
-          <p class="form-subtitle" id="form-subtitle">
-            <!-- Diisi oleh script.js -->
-          </p>
+        <!-- ── KOLOM KANAN: Gambar produk makanan ── -->
+        <div class="hero__product-col">
+          <div class="hero__product" id="hero-product-container">
+            <!-- Diisi script.js — gambar referensi dipotong bagian produknya -->
+          </div>
 
-          <!-- Pesan error jika submit gagal -->
-          <div class="form-submit-error" id="form-submit-error" role="alert" aria-live="polite"></div>
-
-          <form id="early-access-form" novalidate aria-label="Formulir Early Access">
-
-            <!-- Input: Nama -->
-            <div class="form-group">
-              <label class="form-label" for="input-name" id="label-name">Nama</label>
-              <input
-                type="text"
-                id="input-name"
-                name="nama"
-                class="form-input"
-                placeholder="Nama lengkap kamu"
-                autocomplete="name"
-                aria-required="true"
-                aria-describedby="error-name"
-              />
-              <span class="form-error" id="error-name" role="alert"></span>
-            </div>
-
-            <!-- Input: Username Instagram -->
-            <div class="form-group">
-              <label class="form-label" for="input-instagram" id="label-instagram">Username Instagram</label>
-              <input
-                type="text"
-                id="input-instagram"
-                name="instagram"
-                class="form-input"
-                placeholder="@username_instagram"
-                autocomplete="off"
-                aria-required="true"
-                aria-describedby="error-instagram"
-                inputmode="text"
-              />
-              <span class="form-error" id="error-instagram" role="alert"></span>
-            </div>
-
-            <!-- Tombol Submit -->
-            <button type="submit" class="btn btn--primary btn--full btn--lg" id="form-submit-btn">
-              Daftar Early Access
-            </button>
-
-          </form><!-- /#early-access-form -->
-
-          <!-- Link Privacy Policy -->
-          <p class="form-privacy" id="form-privacy-text">
-            <!-- Diisi oleh script.js -->
-          </p>
-
-        </div><!-- /.hero__form-card -->
+          <!-- Tombol CTA di bawah produk (kanan bawah seperti referensi) -->
+          <div class="hero__cta-wrap">
+            <a
+              id="hero-cta-btn"
+              href="#area-layanan"
+              class="btn btn--hero-cta"
+              aria-label="Daftar menjadi yang pertama"
+            ><!-- diisi script.js --></a>
+          </div>
+        </div><!-- /.hero__product-col -->
 
       </div><!-- /.hero__grid -->
-    </div><!-- /.container -->
+    </div><!-- /.hero__container -->
+
   </section><!-- /#beranda -->
 
 
   <!-- =========================================================
-       CUSTOMER PROBLEM & SOLUTION
+       TANTANGAN KELUARGA (Page 2)
+       Hanya berisi: headline + 3 kartu tantangan.
+       Tidak ada label badge, paragraf pembuka, atau banner CTA.
        ========================================================= -->
-  <section id="customer-problem" aria-label="Tantangan Keluarga dan Solusi Dapur Sepekan">
+  <section id="tantangan" aria-label="Tantangan Keluarga">
     <div class="container">
 
-      <div class="section-header section-header--center" data-animate>
-        <span class="section-badge" id="problem-badge">Tantangan Keluarga</span>
-        <h2 class="section-title" id="problem-title">Mengatur Menu Keluarga Setiap Hari Memang Nggak Selalu Mudah!</h2>
-        <p class="section-subtitle" id="problem-subtitle"></p>
+      <div class="challenges__header" data-animate>
+        <h2 class="challenges__title" id="challenges-title">
+          <!-- Diisi oleh script.js -->
+        </h2>
       </div>
 
-      <p class="problem-intro" id="problem-intro" data-animate></p>
-
-      <!-- Grid masalah -->
-      <div class="problems-grid" id="problems-grid" data-animate>
-        <!-- Diisi oleh script.js -->
-      </div>
-
-      <!-- Solution banner -->
-      <div class="solution-banner" id="solution-banner" data-animate>
-        <div class="solution-banner__inner">
-          <h3 class="solution-banner__title" id="solution-title"></h3>
-          <p class="solution-banner__desc" id="solution-desc"></p>
-          <button class="btn btn--primary btn--lg" onclick="scrollToForm()">
-            Daftar Early Access
-          </button>
-        </div>
-      </div>
-
-    </div>
-  </section><!-- /#customer-problem -->
-
-
-  <!-- =========================================================
-       WHY DAPUR SEPEKAN — Page 3
-       ========================================================= -->
-  <section id="why-us" aria-label="Kenapa Dapur Sepekan">
-    <div class="container">
-
-      <div class="section-header section-header--center" data-animate>
-        <span class="section-badge" id="why-badge">Kenapa Dapur Sepekan?</span>
-        <h2 class="section-title" id="why-title">Bukan Sekadar Katering, Ini Cara Lebih Praktis Menyiapkan Menu Keluarga!</h2>
-      </div>
-
-      <div class="why-grid" id="why-grid">
+      <!-- Grid 3 kartu tantangan — diisi oleh script.js -->
+      <div class="challenges__grid" id="challenges-grid">
         <!-- Diisi oleh script.js -->
       </div>
 
     </div>
-  </section><!-- /#why-us -->
+  </section><!-- /#tantangan -->
 
 
   <!-- =========================================================
-       CARA KERJA — Page 4
+       CARA KERJA
        ========================================================= -->
   <section id="cara-kerja" aria-label="Cara Kerja Dapur Sepekan">
     <div class="container">
 
       <div class="section-header section-header--center" data-animate>
         <span class="section-badge" id="how-badge">Cara Kerja</span>
-        <h2 class="section-title" id="how-title">Pilih, Pesan, Simpan, dan Sajikan. Semudah Itu!</h2>
+        <h2 class="section-title" id="how-title">Semudah Ini Menikmati Makanan Rumahan</h2>
         <p class="section-subtitle" id="how-subtitle">
           <!-- Diisi oleh script.js -->
         </p>
@@ -278,6 +210,83 @@
        PAKET LANGGANAN
        ========================================================= -->
   <section id="paket" aria-label="Paket Langganan Dapur Sepekan">
+
+    <!-- Ornamen dekoratif — semua aria-hidden dan pointer-events:none
+         agar tidak mempengaruhi aksesibilitas atau interaksi accordion -->
+
+    <!-- Lengkung navy kiri atas -->
+    <svg class="paket-deco paket-deco--arc-tl" aria-hidden="true" focusable="false"
+      viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 320 C80 280, 160 160, 320 0" fill="none" stroke="#1B2A4A" stroke-width="1.5" opacity="0.18"/>
+      <path d="M0 300 C90 255, 170 140, 300 0" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.10"/>
+    </svg>
+
+    <!-- Lengkung navy kanan bawah -->
+    <svg class="paket-deco paket-deco--arc-br" aria-hidden="true" focusable="false"
+      viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+      <path d="M320 0 C240 40, 160 160, 0 320" fill="none" stroke="#1B2A4A" stroke-width="1.5" opacity="0.18"/>
+      <path d="M320 20 C230 65, 150 180, 20 320" fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.10"/>
+    </svg>
+
+    <!-- Ornamen line-art kiri bawah: daun & ranting -->
+    <svg class="paket-deco paket-deco--flora-l" aria-hidden="true" focusable="false"
+      viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ranting utama -->
+      <path d="M60 320 Q80 240 100 180 Q120 120 140 80" fill="none" stroke="#C4A882" stroke-width="1.5" opacity="0.45"/>
+      <!-- Daun kiri -->
+      <path d="M100 180 Q70 155 55 130 Q80 128 100 180Z" fill="#C4A882" opacity="0.22"/>
+      <path d="M100 180 Q68 162 56 138" fill="none" stroke="#C4A882" stroke-width="1" opacity="0.35"/>
+      <!-- Daun kanan -->
+      <path d="M118 148 Q148 125 165 100 Q142 110 118 148Z" fill="#C4A882" opacity="0.22"/>
+      <path d="M118 148 Q148 128 162 103" fill="none" stroke="#C4A882" stroke-width="1" opacity="0.35"/>
+      <!-- Daun kecil -->
+      <path d="M130 115 Q155 98 165 75 Q145 88 130 115Z" fill="#C4A882" opacity="0.18"/>
+      <!-- Lingkaran buah kecil -->
+      <circle cx="88" cy="210" r="6" fill="#C4A882" opacity="0.20"/>
+      <circle cx="72" cy="250" r="4" fill="#C4A882" opacity="0.18"/>
+    </svg>
+
+    <!-- Ornamen line-art kanan: irisan sayuran & daun -->
+    <svg class="paket-deco paket-deco--flora-r" aria-hidden="true" focusable="false"
+      viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ranting -->
+      <path d="M140 0 Q120 60 100 130 Q85 190 90 280" fill="none" stroke="#C4A882" stroke-width="1.5" opacity="0.45"/>
+      <!-- Daun kanan atas -->
+      <path d="M118 60 Q155 40 170 15 Q145 30 118 60Z" fill="#C4A882" opacity="0.22"/>
+      <path d="M118 60 Q152 42 168 18" fill="none" stroke="#C4A882" stroke-width="1" opacity="0.35"/>
+      <!-- Daun kiri -->
+      <path d="M105 110 Q70 95 52 70 Q75 80 105 110Z" fill="#C4A882" opacity="0.22"/>
+      <!-- Irisan lingkaran (tomat/sayuran) -->
+      <circle cx="88" cy="175" r="20" fill="none" stroke="#C4A882" stroke-width="1.2" opacity="0.28"/>
+      <line x1="68" y1="175" x2="108" y2="175" stroke="#C4A882" stroke-width="0.8" opacity="0.22"/>
+      <line x1="88" y1="155" x2="88" y2="195" stroke="#C4A882" stroke-width="0.8" opacity="0.22"/>
+      <circle cx="88" cy="175" r="8" fill="#C4A882" opacity="0.12"/>
+      <!-- Daun bawah -->
+      <path d="M94 240 Q125 220 138 195 Q112 212 94 240Z" fill="#C4A882" opacity="0.20"/>
+    </svg>
+
+    <!-- Aksen oranye kecil — kiri atas -->
+    <svg class="paket-deco paket-deco--accent-tl" aria-hidden="true" focusable="false"
+      viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <line x1="8" y1="8" x2="30" y2="8" stroke="#E8662A" stroke-width="2.5" stroke-linecap="round" opacity="0.60"/>
+      <line x1="8" y1="8" x2="8" y2="30" stroke="#E8662A" stroke-width="2.5" stroke-linecap="round" opacity="0.60"/>
+      <circle cx="8" cy="8" r="3" fill="#E8662A" opacity="0.50"/>
+    </svg>
+
+    <!-- Aksen oranye kecil — kanan bawah -->
+    <svg class="paket-deco paket-deco--accent-br" aria-hidden="true" focusable="false"
+      viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <line x1="52" y1="52" x2="30" y2="52" stroke="#E8662A" stroke-width="2.5" stroke-linecap="round" opacity="0.60"/>
+      <line x1="52" y1="52" x2="52" y2="30" stroke="#E8662A" stroke-width="2.5" stroke-linecap="round" opacity="0.60"/>
+      <circle cx="52" cy="52" r="3" fill="#E8662A" opacity="0.50"/>
+    </svg>
+
+    <!-- Bentuk lengkung abstrak krem — dimensi background -->
+    <svg class="paket-deco paket-deco--blob" aria-hidden="true" focusable="false"
+      viewBox="0 0 500 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 150 Q120 80 250 120 Q380 160 500 100 L500 300 L0 300 Z" fill="#EDE0CF" opacity="0.35"/>
+    </svg>
+
     <div class="container">
 
       <div class="section-header section-header--center" data-animate>
@@ -298,26 +307,143 @@
 
 
   <!-- =========================================================
-       FORMAT MAKANAN (Chilled & Frozen)
+       SECTION 5 — AREA LAYANAN & EARLY ACCESS FORM
+       (Posisi: setelah #paket, sebelum #faq)
        ========================================================= -->
-  <section id="format-makanan" aria-label="Format Makanan Dapur Sepekan">
-    <div class="container">
+  <section id="area-layanan" aria-label="Area Layanan dan Formulir Early Access">
 
-      <div class="section-header section-header--center" data-animate>
-        <span class="section-badge" id="format-badge">Format Makanan</span>
-        <h2 class="section-title" id="format-title">Dua Format yang Sedang Kami Siapkan</h2>
-        <p class="section-subtitle" id="format-subtitle">
-          <!-- Diisi oleh script.js -->
-        </p>
-      </div>
+    <!-- Dekorasi topografi — aria-hidden, pointer-events:none, z-index:0 -->
+    <svg class="s5-deco s5-deco--topo" aria-hidden="true" focusable="false"
+      viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 400 Q200 350 400 390 Q600 430 800 370 Q1000 310 1200 360"
+            fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.07"/>
+      <path d="M0 450 Q300 400 500 440 Q700 480 900 420 Q1100 360 1200 410"
+            fill="none" stroke="#1B2A4A" stroke-width="1" opacity="0.05"/>
+      <path d="M0 300 Q150 260 350 295 Q550 330 750 275 Q950 220 1200 280"
+            fill="none" stroke="#1B2A4A" stroke-width="0.8" opacity="0.06"/>
+      <path d="M-50 500 Q200 420 450 480 Q700 540 950 460 Q1100 410 1250 490"
+            fill="none" stroke="#1B2A4A" stroke-width="1.2" opacity="0.04"/>
+      <circle cx="120"  cy="180" r="3"   fill="#E8662A" opacity="0.30"/>
+      <circle cx="380"  cy="120" r="2"   fill="#E8662A" opacity="0.25"/>
+      <circle cx="880"  cy="150" r="3"   fill="#E8662A" opacity="0.28"/>
+      <circle cx="1050" cy="220" r="2"   fill="#E8662A" opacity="0.22"/>
+      <circle cx="650"  cy="90"  r="2.5" fill="#E8662A" opacity="0.25"/>
+      <ellipse cx="150"  cy="460" rx="180" ry="70" fill="#C4A882" opacity="0.06"/>
+      <ellipse cx="1050" cy="140" rx="140" ry="60" fill="#C4A882" opacity="0.06"/>
+    </svg>
 
-      <!-- Grid format — diisi oleh script.js -->
-      <div class="format-grid" id="format-grid">
-        <!-- Diisi oleh script.js -->
-      </div>
+    <div class="container s5-container">
+      <div class="s5-grid">
 
-    </div>
-  </section><!-- /#format-makanan -->
+        <!-- ── Kolom kiri: Peta ── -->
+        <div class="s5-map-col">
+          <h2 class="s5-map-title">Area Layanan Kami</h2>
+          <p class="s5-map-desc">
+            Dapur Sepekan berencana hadir di wilayah
+            <strong>Tangerang Selatan</strong> dan <strong>Gading Serpong</strong>.
+            Gunakan peta di bawah untuk menjelajahi area tersebut.
+            Cakupan pengiriman resmi akan diumumkan saat launching.
+          </p>
+          <div class="s5-map-wrap">
+            <!--
+              Google Maps Embed — tidak membutuhkan API key untuk tampilan dasar.
+              Untuk menambah marker atau mengubah lokasi fokus, ubah parameter
+              q= dan pb= pada URL di bawah.
+              Dokumentasi: https://developers.google.com/maps/documentation/embed/get-started
+            -->
+            <iframe
+              class="s5-map-iframe"
+              title="Peta Area Layanan Dapur Sepekan — Tangerang Selatan dan Gading Serpong"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d63392!2d106.665!3d-6.290!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sid!2sid!4v1700000000000"
+            ></iframe>
+          </div>
+        </div><!-- /.s5-map-col -->
+
+        <!-- ── Kolom kanan: Form ── -->
+        <div class="s5-form-col">
+          <div class="s5-form-card">
+
+            <span class="s5-badge">COMING SOON!</span>
+
+            <h2 class="s5-form-title">
+              Jadilah yang pertama mengetahui kabar launching Dapur Sepekan,
+              pilihan menu, dan penawaran spesial dari kami!
+            </h2>
+
+            <!-- Pesan sukses — muncul HANYA setelah konfirmasi nyata dari server -->
+            <div class="s5-success-msg" id="s5-success-msg"
+                 role="status" aria-live="polite"></div>
+
+            <!-- Pesan error submit -->
+            <div class="s5-submit-error" id="s5-submit-error"
+                 role="alert" aria-live="polite"></div>
+
+            <form id="s5-early-access-form" novalidate
+                  aria-label="Formulir Early Access">
+
+              <div class="s5-field">
+                <label class="s5-label" for="s5-input-name">Nama</label>
+                <input
+                  type="text"
+                  id="s5-input-name"
+                  name="nama"
+                  class="s5-input"
+                  placeholder="Nama lengkap kamu"
+                  autocomplete="name"
+                  aria-required="true"
+                  aria-describedby="s5-error-name"
+                />
+                <span class="s5-field-error" id="s5-error-name" role="alert"></span>
+              </div>
+
+              <div class="s5-field">
+                <label class="s5-label" for="s5-input-instagram">
+                  Username Instagram
+                </label>
+                <input
+                  type="text"
+                  id="s5-input-instagram"
+                  name="username"
+                  class="s5-input"
+                  placeholder="@username_instagram"
+                  autocomplete="off"
+                  aria-required="true"
+                  aria-describedby="s5-error-ig"
+                  inputmode="text"
+                />
+                <span class="s5-field-error" id="s5-error-ig" role="alert"></span>
+              </div>
+
+              <button type="submit" class="s5-submit-btn" id="s5-submit-btn">
+                Daftar Early Access
+              </button>
+
+            </form>
+
+            <p class="s5-privacy">
+              Dengan mendaftar, kamu menyetujui
+              <button type="button" class="s5-privacy-link"
+                      onclick="openModal('privacy-modal')">
+                Kebijakan Privasi
+              </button>
+              kami.
+            </p>
+
+            <p class="s5-tagline">
+              <em>Something delicious is coming to your family table!</em>
+            </p>
+
+          </div><!-- /.s5-form-card -->
+        </div><!-- /.s5-form-col -->
+
+      </div><!-- /.s5-grid -->
+    </div><!-- /.container -->
+
+  </section><!-- /#area-layanan -->
 
 
   <!-- =========================================================
@@ -341,74 +467,6 @@
 
     </div>
   </section><!-- /#faq -->
-
-
-  <!-- =========================================================
-       COMING SOON
-       ========================================================= -->
-  <section id="coming-soon" aria-label="Coming Soon">
-    <div class="container">
-
-      <div class="coming-soon__inner" data-animate>
-
-        <!-- Badge -->
-        <span class="coming-soon__badge" id="coming-soon-badge">COMING SOON!</span>
-
-        <!-- Judul -->
-        <h2 class="coming-soon__title" id="coming-soon-title"></h2>
-
-        <!-- Form registrasi (reuse form yang sudah ada) -->
-        <div class="coming-soon__form-wrap">
-          <form class="lead-form coming-soon__form" id="coming-soon-form" novalidate>
-
-            <div class="form-group">
-              <label class="form-label" for="cs-name" id="cs-name-label">Nama</label>
-              <input
-                class="form-input"
-                type="text"
-                id="cs-name"
-                name="name"
-                placeholder="Nama lengkap kamu"
-                autocomplete="name"
-                required
-              />
-              <span class="form-error" id="cs-name-error" role="alert" aria-live="polite"></span>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="cs-instagram" id="cs-instagram-label">Username Instagram</label>
-              <input
-                class="form-input"
-                type="text"
-                id="cs-instagram"
-                name="instagram"
-                placeholder="@username_instagram"
-                autocomplete="off"
-                required
-              />
-              <span class="form-error" id="cs-instagram-error" role="alert" aria-live="polite"></span>
-            </div>
-
-            <button class="btn btn--primary btn--full" type="submit" id="cs-submit-btn">
-              Daftar Early Access
-            </button>
-
-            <p class="form-privacy">
-              Dengan mendaftar, kamu menyetujui
-              <button type="button" class="privacy-link" id="cs-privacy-btn">Kebijakan Privasi</button>
-              kami.
-            </p>
-
-          </form>
-        </div>
-
-        <!-- Tagline -->
-        <p class="coming-soon__tagline" id="coming-soon-tagline"></p>
-
-      </div>
-
-    </div>
-  </section><!-- /#coming-soon -->
 
 
   <!-- =========================================================

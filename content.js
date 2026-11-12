@@ -33,7 +33,7 @@ const CONTENT = {
 
     // --- Email ---
     // Ganti dengan email resmi jika sudah ada
-    email: "hello@dapursepekan.id",
+    email: "dsepekan@gmail.com",
   },
 
   // ============================================================
@@ -53,263 +53,225 @@ const CONTENT = {
   //  HERO SECTION
   // ============================================================
   hero: {
-    badge: "COMING SOON",
+    badge: "Coming Soon",
 
-    // Tagline di atas headline
-    tagline: "Your Family Home-Cooked Meal Solution",
+    // Kalimat pembuka kecil di atas headline (warna oranye, huruf kapital)
+    eyebrow: "YOUR FAMILY HOME-COOKED MEAL SOLUTION",
 
-    // Headline utama
-    headline: "A NEW WAY TO ENJOY FAMILY MEALS",
+    // Kalimat pengenalan brand — tampil di atas headline utama
+    intro: "Kenalan yuk dengan Dapur Sepekan!",
 
-    // Sub-headline pertama
-    subheadlineQuestion: "Setiap Hari Mikirin Menu? Saatnya Punya Solusi!",
+    // Headline utama — dua baris sesuai referensi
+    headlineLine1: "A NEW WAY TO ENJOY",        // navy, Fredoka One, besar
+    headlineLine2: "FAMILY MEALS!",             // oranye, Fredoka One, underline
 
-    // Paragraf utama
-    subheadline: "Ingin keluarga tetap menikmati masakan rumahan yang enak dan bervariasi, tanpa harus repot memikirkan menu dan memasak setiap hari?",
+    // Sub-headline bold di bawah headline
+    subhead: "Stress Setiap Hari Mikirin Menu? Saatnya Punya Solusi!",
 
-    // Intro brand
-    brandIntro: "Kenalan dengan Dapur Sepekan!",
+    // Deskripsi paragraf
+    description: "Solusi family meal prep mingguan dengan pilihan porsi yang beragam dan fleksibel, mudah disimpan dan disajikan kapan saja. Serasa punya home chef sendiri!",
 
-    // Deskripsi produk
-    description: "Solusi paket menu rumahan mingguan dengan porsi keluarga, pilihan hidangan yang bervariasi, dan praktis disimpan serta disajikan kapan saja.",
+    // ----------------------------------------------------------------
+    // BADGE PRODUK — semua aset sudah tersedia di folder assets/
+    // Logo Halal, MSG Free, dan No Added Preservatives.
+    // Pastikan klaim ini sesuai dengan komposisi produk sebelum publish.
+    // ----------------------------------------------------------------
+    halalLogo: "assets/Halal_Indonesia.svg.png",
+    halalLogoAlt: "Halal Indonesia",
 
-    // Keunggulan
-    highlight: "Dibuat tanpa bahan pengawet dan MSG, serta terjamin halal.",
-
-    // Penutup
-    closing: "Serasa punya home chef, untuk hidangan keluarga setiap hari!",
-
-    // Gambar hero — letakkan file di folder assets/ lalu ganti nama file di sini
-    image: "assets/hero-food.jpg",
-    imageAlt: "Sajian makanan rumahan Dapur Sepekan",
-  },
-
-  // ============================================================
-  //  LEAD FORM
-  // ============================================================
-  form: {
-    title: "Jadilah yang Pertama",
-    subtitle: "Daftarkan diri kamu dan dapatkan informasi launching serta penawaran eksklusif early access.",
-
-    // Label dan placeholder input
-    namePlaceholder: "Nama lengkap kamu",
-    nameLabel: "Nama",
-    instagramPlaceholder: "@username_instagram",
-    instagramLabel: "Username Instagram",
-
-    // Teks tombol submit
-    submitButton: "Daftar Early Access",
-    submitButtonLoading: "Mengirim...",
-
-    // Pesan validasi (muncul jika input kosong atau salah)
-    errorName: "Nama tidak boleh kosong.",
-    errorInstagram: "Username Instagram tidak boleh kosong.",
-    errorInstagramFormat: "Masukkan username Instagram yang valid (huruf, angka, titik, atau underscore).",
-    errorSubmit: "Gagal mengirim data. Periksa koneksi internet kamu dan coba lagi.",
-
-    // Teks link Privacy Policy di bawah form
-    privacyPolicyText: "Dengan mendaftar, kamu menyetujui",
-    privacyPolicyLink: "Kebijakan Privasi",
-    privacyPolicyText2: "kami.",
-  },
-
-  // ============================================================
-  //  THANK YOU POPUP (muncul setelah form berhasil dikirim)
-  // ============================================================
-  thankYou: {
-    title: "Terima Kasih! 🎉",
-    message: "Kamu sudah terdaftar sebagai Early Access. Kami akan menghubungi kamu melalui Instagram saat Dapur Sepekan siap launching.",
-    subMessage: "Pantau terus Instagram kami untuk update terbaru.",
-    closeButton: "Tutup",
-  },
-
-  // ============================================================
-  //  CUSTOMER PROBLEM & SOLUTION — Page 2
-  // ============================================================
-  customerProblem: {
-    sectionBadge: "Tantangan Keluarga",
-    title: "Mengatur Menu Keluarga Setiap Hari Memang Nggak Selalu Mudah!",
-    subtitle: "Ingin keluarga menikmati masakan rumahan yang sehat dan bervariasi, tapi kesibukan sehari-hari sering jadi tantangan.",
-    problemsIntro: "Pernah mengalami hal-hal ini?",
-
-    problems: [
-      {
-        number: "1",
-        icon: "😓",
-        title: "Sibuk Bekerja, Bingung Menyiapkan Menu Sehat?",
-        description: "Sulit menyiapkan variasi menu sehat untuk keluarga di tengah padatnya aktivitas sehari-hari.",
-      },
-      {
-        number: "2",
-        icon: "🕐",
-        title: "Katering Harian Belum Tentu Sesuai Kebutuhan?",
-        description: "Pengiriman terlambat, waktu makan terganggu. Porsi yang sudah ditentukan pun belum tentu sesuai kebutuhan setiap anggota keluarga.",
-      },
-      {
-        number: "3",
-        icon: "🍽️",
-        title: "Ingin Lebih Bebas Memilih Menu?",
-        description: "Setiap anggota keluarga punya selera berbeda, tetapi pilihan menu katering sering kali terbatas.",
-      },
+    productBadges: [
+      { type: "halal",  label: "HALAL",  sublabel: "INDONESIA",        img: "assets/Halal_Indonesia.svg.png", imgAlt: "Halal Indonesia" },
+      { type: "img",    label: "Tanpa MSG",   sublabel: "",             img: "assets/logo msg.png",           imgAlt: "Tanpa MSG"       },
+      { type: "img",    label: "Tanpa Bahan Pengawet", sublabel: "",    img: "assets/pengawet.png",           imgAlt: "Tanpa Bahan Pengawet" },
     ],
 
-    solutionTitle: "Bersama Dapur Sepekan, Anda Pilih Menunya, Kami Siapkan Hidangannya. Keluarga Tinggal Menikmati!",
-    solutionDesc: "Solusi meal prep rumahan mingguan dengan pilihan menu yang fleksibel, dan praktis disajikan kapan saja.",
-  },
+    // Tombol CTA — teks dan anchor target
+    ctaButton: "Daftar menjadi yang pertama!",
+    ctaLink: "#area-layanan",   // Lead Form Early Access
 
-  // ============================================================
-  //  WHY DAPUR SEPEKAN — Page 3
-  // ============================================================
-  whyUs: {
-    sectionBadge: "Kenapa Dapur Sepekan?",
-    title: "Bukan Sekadar Katering, Ini Cara Lebih Praktis Menyiapkan Menu Keluarga!",
+    // Gambar produk (kanan hero) — masukkan file PNG transparan ke assets/
+    productImage: "assets/hero-product.png",
+    productImageAlt: "Produk paket makanan Dapur Sepekan",
 
-    reasons: [
+    // Background dapur — diatur via CSS .hero__bg (bukan via JS)
+    // Lihat komentar di style.css untuk cara mengaktifkan background-image
+  // ============================================================
+  //  TANTANGAN KELUARGA — Section Page 2
+  //  Berisi headline utama + 3 kartu tantangan dengan background gambar.
+  // ============================================================
+  challenges: {
+    title: "Mengatur Menu Keluarga Setiap Hari Memang Nggak Selalu Mudah!",
+
+    items: [
       {
         number: "01",
-        icon: "👨‍👩‍👧‍👦",
-        title: "Family-Sized Meal Packages",
-        description: "Paket menu dengan pilihan porsi single maupun keluarga, sesuai kebutuhan makan Anda.",
+        image: "assets/busy day.png",
+        title: "Sibuk Bekerja, Bingung Menyiapkan Menu Sehat?",
+        description: "Pagi berangkat kerja, sore pulang kelelahan. Menyiapkan menu makan bergizi untuk seluruh keluarga setiap hari terasa menyita waktu dan tenaga.",
       },
       {
         number: "02",
-        icon: "🗓️",
-        title: "Weekly Menu Variety",
-        description: "Pilihan lauk dan hidangan rumahan yang bervariasi setiap minggu. Tidak perlu bingung menentukan menu lagi!",
+        image: "assets/aneka menu.png",
+        title: "Katering Harian Belum Tentu Sesuai Kebutuhan?",
+        description: "Menu katering sering kurang bervariasi, porsi tidak selalu pas, dan belum tentu sesuai dengan selera dan kebutuhan nutrisi keluarga kamu.",
       },
       {
         number: "03",
-        icon: "👨‍🍳",
-        title: "Home Chef Experience",
-        description: "Nikmati kemudahan menyiapkan hidangan rumahan tanpa harus repot memasak dari awal setiap hari.",
-      },
-      {
-        number: "04",
-        icon: "🌿",
-        title: "Healthy & Halal Ingredients",
-        description: "Masakan rumahan yang dibuat tanpa bahan pengawet dan MSG, serta bersertifikat halal. Lebih tenang menyajikan hidangan untuk keluarga.",
+        image: "assets/meal prep.png",
+        title: "Ingin Lebih Bebas Memilih Menu?",
+        description: "Setiap keluarga punya selera dan kebutuhan yang berbeda. Kamu ingin pilihan menu yang fleksibel — bukan sekadar apa yang tersedia.",
       },
     ],
   },
 
   // ============================================================
-  //  CARA KERJA — Page 4
-  //  Setiap langkah memiliki: icon (emoji), title, description
+  //  CARA KERJA — 4 langkah dengan ikon SVG
+  //  Setiap langkah menggunakan iconId yang cocok dengan STEP_ICONS di script.js
   // ============================================================
   howItWorks: {
     sectionBadge: "Cara Kerja",
-    title: "Pilih, Pesan, Simpan, dan Sajikan. Semudah Itu!",
-    subtitle: "",
+    title: "Semudah Ini Menikmati Makanan Rumahan",
+    subtitle: "Dapur Sepekan sedang disiapkan untuk memberikan pengalaman yang mudah dan menyenangkan.",
 
     steps: [
       {
         number: "01",
-        icon: "📋",
-        title: "Choose Your Menu",
-        description: "Pilih variasi menu favorit sesuai selera keluarga.",
+        iconId: "icon-paket",
+        title: "Pilih Paket",
+        description: "Pilih paket yang sesuai dengan kebutuhan keluarga kamu — Single atau Family Package, dengan pilihan langganan 1 minggu, 1 bulan, atau 3 bulan.",
       },
       {
         number: "02",
-        icon: "⚖️",
-        title: "Select Your Portion",
-        description: "Tentukan porsi single atau keluarga sesuai kebutuhan.",
+        iconId: "icon-menu",
+        title: "Menu Disiapkan",
+        description: "Tim Dapur Sepekan menyiapkan variasi menu rumahan untuk 5 hari dalam seminggu, dirancang untuk memastikan kamu tidak bosan.",
       },
       {
         number: "03",
-        icon: "📦",
-        title: "Receive Your Meals",
-        description: "Pesanan diantarkan sesuai jadwal pengiriman mingguan.",
+        iconId: "icon-kirim",
+        title: "Dikirim ke Rumah",
+        description: "Makanan disiapkan dengan format Chilled atau Frozen dan akan dikirimkan langsung ke rumah kamu dalam kemasan yang terjaga kualitasnya.",
       },
       {
         number: "04",
-        icon: "🍽️",
-        title: "Store, Reheat & Enjoy!",
-        description: "Simpan sesuai petunjuk, panaskan saat dibutuhkan, dan nikmati bersama keluarga.",
+        iconId: "icon-sajian",
+        title: "Nikmati Bersama Keluarga",
+        description: "Sajikan makanan rumahan lezat untuk keluarga kamu setiap hari, tanpa harus repot berbelanja atau memasak dari nol.",
       },
     ],
   },
 
   // ============================================================
-  //  PAKET LANGGANAN
-  //  Ganti PRICE_PLACEHOLDER dengan harga sebenarnya saat sudah ada
+  //  PAKET LANGGANAN — Struktur accordion (Solo & Family)
   // ============================================================
   packages: {
     sectionBadge: "Paket Kami",
     title: "Pilih Paket yang Tepat untuk Keluarga Kamu",
-    subtitle: "Detail harga dan paket akan diumumkan saat launching. Daftar sekarang untuk mendapatkan penawaran eksklusif early access.",
-    priceNote: "Harga akan diumumkan saat launching",
+    subtitle: "5 menu per pekan · Tersedia format Chilled dan Frozen · Dikirim ke rumah kamu",
 
-    // Paket tersedia — atur isFeatured: true untuk paket yang ingin ditonjolkan
-    items: [
+    // Harga referensi yang dicoret (paket paling dasar)
+    referencePrice: "Rp37.500",
+
+    categories: [
       {
-        id: "single-1week",
-        name: "Single – 1 Minggu",
-        packageType: "Single Package",
-        duration: "1 Minggu",
-        pax: "1 Pax",
-        description: "Cocok untuk kamu yang tinggal sendiri dan ingin menikmati makanan rumahan setiap hari kerja.",
-        features: [
-          "5 hari menu per minggu",
-          "1 porsi per hari",
-          "Format Chilled / Frozen",
-          "Variasi menu mingguan",
+        id: "solo",
+        name: "Paket Solo",
+        paxLabel: "1 pax · per hari",
+        description: "Cocok untuk kamu yang tinggal sendiri dan ingin menikmati makanan rumahan setiap hari kerja tanpa repot memasak.",
+        plans: [
+          {
+            id: "solo-1w",
+            duration: "1 Minggu",
+            pricePerPax: "Rp37.500",
+            priceTotal: "Rp187.500",
+            showStrike: false,     // harga referensi = harga ini, tidak perlu dicoret
+            isPopular: false,
+            details: {
+              deskripsi: "Cocok untuk kamu yang ingin mencoba Dapur Sepekan selama satu minggu penuh.",
+              porsi: "1 porsi per hari",
+              menu: "5 variasi menu per minggu",
+              benefit: ["Tanpa komitmen jangka panjang", "Variasi menu harian"],
+            },
+          },
+          {
+            id: "solo-1m",
+            duration: "1 Bulan",
+            pricePerPax: "Rp35.000",
+            priceTotal: "Rp700.000",
+            showStrike: true,      // lebih murah dari referensi → tampilkan Rp37.500 dicoret
+            isPopular: false,
+            details: {
+              deskripsi: "Hemat lebih banyak dengan berlangganan sebulan penuh. Cocok untuk rutinitas harian kamu.",
+              porsi: "1 porsi per hari",
+              menu: "5 variasi menu per minggu",
+              benefit: ["Lebih hemat dari paket mingguan", "Variasi menu mingguan"],
+            },
+          },
+          {
+            id: "solo-3m",
+            duration: "3 Bulan",
+            pricePerPax: "Rp32.500",
+            priceTotal: "Rp1.950.000",
+            showStrike: true,
+            isPopular: true,
+            details: {
+              deskripsi: "Harga terbaik untuk kamu yang sudah yakin dengan gaya hidup meal prep mingguan.",
+              porsi: "1 porsi per hari",
+              menu: "5 variasi menu per minggu",
+              benefit: ["Harga per porsi paling hemat", "Variasi menu mingguan", "Komitmen terbaik untuk kebiasaan sehat"],
+            },
+          },
         ],
-        price: "PRICE_PLACEHOLDER",  // ← Ganti dengan harga sebenarnya
-        isFeatured: false,
-        ctaButton: "Daftar Early Access",
       },
       {
-        id: "family-1week",
-        name: "Family – 1 Minggu",
-        packageType: "Family Package",
-        duration: "1 Minggu",
-        pax: "4 Pax",
-        description: "Solusi praktis untuk keluarga kecil menikmati makanan rumahan bersama setiap hari kerja.",
-        features: [
-          "5 hari menu per minggu",
-          "4 porsi per hari",
-          "Format Chilled / Frozen",
-          "Variasi menu mingguan",
+        id: "family",
+        name: "Paket Family",
+        paxLabel: "4 pax · per hari",
+        description: "Solusi lengkap untuk seluruh keluarga. Semua anggota keluarga menikmati makanan rumahan bersama setiap hari kerja.",
+        plans: [
+          {
+            id: "family-1w",
+            duration: "1 Minggu",
+            pricePerPax: "Rp35.000",
+            priceTotal: "Rp700.000",
+            showStrike: true,
+            isPopular: false,
+            details: {
+              deskripsi: "Paket keluarga mingguan untuk kamu yang baru mau mencoba layanan Dapur Sepekan bersama keluarga.",
+              porsi: "4 porsi per hari",
+              menu: "5 variasi menu per minggu",
+              benefit: ["Cocok untuk keluarga kecil", "Variasi menu harian"],
+            },
+          },
+          {
+            id: "family-1m",
+            duration: "1 Bulan",
+            pricePerPax: "Rp32.500",
+            priceTotal: "Rp2.600.000",
+            showStrike: true,
+            isPopular: true,
+            details: {
+              deskripsi: "Paket keluarga bulanan — pilihan terpopuler untuk keluarga yang ingin konsistensi makanan rumahan setiap pekan.",
+              porsi: "4 porsi per hari",
+              menu: "5 variasi menu per minggu",
+              benefit: ["Lebih hemat dari paket mingguan", "Variasi menu mingguan", "Paling banyak dipilih keluarga"],
+            },
+          },
+          {
+            id: "family-3m",
+            duration: "3 Bulan",
+            pricePerPax: "Rp30.000",
+            priceTotal: "Rp7.200.000",
+            showStrike: true,
+            isPopular: false,
+            details: {
+              deskripsi: "Harga terbaik untuk keluarga yang sudah siap beralih ke solusi makanan mingguan jangka panjang.",
+              porsi: "4 porsi per hari",
+              menu: "5 variasi menu per minggu",
+              benefit: ["Harga per porsi paling hemat", "Variasi menu mingguan", "Nilai terbaik untuk keluarga"],
+            },
+          },
         ],
-        price: "PRICE_PLACEHOLDER",  // ← Ganti dengan harga sebenarnya
-        isFeatured: false,
-        ctaButton: "Daftar Early Access",
-      },
-      {
-        id: "family-1month",
-        name: "Family – 1 Bulan",
-        packageType: "Family Package",
-        duration: "1 Bulan",
-        pax: "4 Pax",
-        description: "Langganan bulanan untuk keluarga yang ingin konsistensi makanan rumahan setiap pekan.",
-        features: [
-          "5 hari menu per minggu",
-          "4 porsi per hari",
-          "Format Chilled / Frozen",
-          "Variasi menu mingguan",
-          "Lebih hemat dari paket mingguan",
-        ],
-        price: "PRICE_PLACEHOLDER",  // ← Ganti dengan harga sebenarnya
-        isFeatured: true,            // ← Paket ini ditampilkan sebagai "Paling Populer"
-        ctaButton: "Daftar Early Access",
-      },
-      {
-        id: "family-3month",
-        name: "Family – 3 Bulan",
-        packageType: "Family Package",
-        duration: "3 Bulan",
-        pax: "4 Pax",
-        description: "Komitmen jangka panjang dengan nilai terbaik untuk keluarga yang sudah siap beralih ke solusi makanan mingguan.",
-        features: [
-          "5 hari menu per minggu",
-          "4 porsi per hari",
-          "Format Chilled / Frozen",
-          "Variasi menu mingguan",
-          "Nilai terbaik — paling hemat",
-        ],
-        price: "PRICE_PLACEHOLDER",  // ← Ganti dengan harga sebenarnya
-        isFeatured: false,
-        ctaButton: "Daftar Early Access",
       },
     ],
   },
@@ -352,37 +314,33 @@ const CONTENT = {
   // ============================================================
   faq: {
     sectionBadge: "FAQ",
-    title: "Penasaran dengan Dapur Sepekan?",
+    title: "Pertanyaan yang Sering Ditanyakan",
     subtitle: "Punya pertanyaan lain? Hubungi kami melalui Instagram.",
 
     questions: [
       {
         question: "Apa itu Dapur Sepekan?",
-        answer: "Dapur Sepekan adalah layanan online catering dengan konsep weekly meal prep yang menyediakan pilihan hidangan rumahan untuk kebutuhan makan sehari-hari.",
-      },
-      {
-        question: "Apakah saya bisa memilih menu sendiri?",
-        answer: "Ya! Anda bisa memilih variasi menu yang tersedia sesuai selera keluarga.",
-      },
-      {
-        question: "Apakah tersedia pilihan porsi single dan keluarga?",
-        answer: "Ya! Tersedia pilihan porsi yang dapat disesuaikan dengan kebutuhan makan Anda.",
-      },
-      {
-        question: "Apakah makanan Dapur Sepekan menggunakan bahan pengawet dan MSG?",
-        answer: "Tidak. Seluruh hidangan Dapur Sepekan dibuat 100% tanpa bahan pengawet dan MSG.",
-      },
-      {
-        question: "Apakah Dapur Sepekan bersertifikat halal?",
-        answer: "Ya, Dapur Sepekan menjamin produk yang ditawarkan telah memiliki sertifikasi halal.",
-      },
-      {
-        question: "Bagaimana sistem pengirimannya?",
-        answer: "Dapur Sepekan menyediakan jadwal pengiriman mingguan setiap Sabtu dan Minggu, dengan pilihan waktu siang atau sore. Anda dapat memilih jadwal pengiriman yang paling sesuai dengan kebutuhan dan aktivitas keluarga.",
+        answer: "Dapur Sepekan adalah layanan solusi makanan rumahan mingguan untuk keluarga. Kami menyiapkan menu makanan rumahan yang praktis, bervariasi, dan berkualitas — sehingga kamu tidak perlu lagi repot berbelanja bahan makanan dan memasak setiap hari.",
       },
       {
         question: "Kapan Dapur Sepekan akan launching?",
-        answer: "Dapur Sepekan saat ini sedang dalam tahap persiapan. Kami akan mengumumkan tanggal launching melalui landing page kami. Daftar Early Access sekarang agar kamu menjadi yang pertama mendapatkan informasi resmi.",
+        answer: "Dapur Sepekan saat ini sedang dalam tahap persiapan. Kami akan mengumumkan tanggal launching melalui Instagram kami. Daftar Early Access sekarang agar kamu menjadi yang pertama mendapatkan informasi resmi.",
+      },
+      {
+        question: "Apa pilihan durasi langganan yang tersedia?",
+        answer: "Dapur Sepekan akan menyediakan tiga pilihan durasi langganan: 1 minggu, 1 bulan, dan 3 bulan. Detail harga untuk setiap paket akan diumumkan saat launching.",
+      },
+      {
+        question: "Berapa menu yang disiapkan per minggu?",
+        answer: "Setiap paket mencakup 5 hari menu per minggu (hari kerja Senin–Jumat). Variasi menu dirancang agar kamu dan keluarga tidak bosan.",
+      },
+      {
+        question: "Di area mana saja Dapur Sepekan melayani pelanggan?",
+        answer: "Saat ini Dapur Sepekan hanya melayani pemesanan di wilayah Tangerang Selatan (Tangsel) dan Gading Serpong. Untuk sementara, layanan kami belum tersedia di luar area tersebut. Kami akan menginformasikan apabila cakupan layanan bertambah.",
+      },
+      {
+        question: "Bagaimana cara mendapatkan informasi saat Dapur Sepekan launching?",
+        answer: "Daftarkan nama dan username Instagram kamu melalui formulir Early Access di halaman ini. Kami akan menghubungi kamu melalui Instagram saat Dapur Sepekan siap launching, termasuk penawaran eksklusif bagi pendaftar awal.",
       },
     ],
   },
@@ -445,7 +403,7 @@ const CONTENT = {
     contactTitle: "Hubungi Kami",
     contactItems: [
       { icon: "📸", label: "Instagram", value: "@dapursepekan", href: "https://instagram.com/dapursepekan" },
-      { icon: "✉️", label: "Email",     value: "hello@dapursepekan.id", href: "mailto:hello@dapursepekan.id" },
+      { icon: "✉️", label: "Email",     value: "dsepekan@gmail.com", href: "mailto:dsepekan@gmail.com" },
     ],
 
     // Teks copyright — {year} akan otomatis diganti dengan tahun saat ini

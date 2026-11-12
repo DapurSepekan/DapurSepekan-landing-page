@@ -1,167 +1,198 @@
 /**
  * ============================================================
  *  DAPUR SEPEKAN — GOOGLE APPS SCRIPT
- *  File: Code.gs
+ *  Mekanisme: JSON-P via GET
+ *  Tab spreadsheet: Leads
+ *  Kolom: Timestamp | Nama | Username Instagram | Sumber | Status Lead
  * ============================================================
  *
- *  CARA PENGGUNAAN:
- *  1. Buka Google Sheets dan buat spreadsheet baru
- *  2. Di menu: Extensions > Apps Script
- *  3. Hapus kode default, lalu copy-paste seluruh kode ini
- *  4. Ganti nilai SPREADSHEET_ID di bawah dengan ID spreadsheet kamu
- *  5. Simpan (Ctrl+S), lalu klik Deploy > New Deployment
- *  6. Pilih Type: Web App
- *  7. Execute as: Me
- *  8. Who has access: Anyone
- *  9. Klik Deploy, lalu salin URL yang diberikan
- *  10. Tempelkan URL tersebut ke file script.js di variabel APPS_SCRIPT_URL
+ *  CARA DEPLOY:
+ *  1. Buka Google Sheets → Extensions → Apps Script
+ *  2. Paste seluruh kode ini
+ *  3. WAJIB: Ganti SPREADSHEET_ID di bawah dengan ID spreadsheet kamu
+ *     (URL Google Sheets: https://docs.google.com/spreadsheets/d/[ID-DI-SINI]/edit)
+ *  4. Simpan → Deploy → New Deployment → Web App
+ *     - Execute as: Me
+ *     - Who has access: Anyone
+ *  5. Salin URL deployment → paste ke SECTION5_APPS_SCRIPT_URL di script.js
  *
- *  CARA MENEMUKAN SPREADSHEET ID:
- *  URL Google Sheets kamu:
- *  https://docs.google.com/spreadsheets/d/[SPREADSHEET_ID]/edit
- *  Salin bagian [SPREADSHEET_ID] dari URL tersebut.
+ *  CATATAN PENGUJIAN (Langkah 2 dalam rencana pengujian):
+ *  Membuka URL endpoint di browser AKAN MENULIS BARIS BARU ke spreadsheet.
+ *  Ini bukan dry-run. Hapus baris tes secara manual dari tab Leads setelah pengujian.
+ *  Contoh URL tes (ganti <DEPLOY_URL> dengan URL aktual setelah deploy):
+ *  <DEPLOY_URL>?callback=test&nama=CobaDapur&username=test_akun
+ *  Respons yang diharapkan: test({"status":"success",...})
  * ============================================================
  */
 
-// ============================================================
-//  KONFIGURASI — Ganti nilai di bawah ini
-// ============================================================
-
-// Ganti dengan ID spreadsheet Google Sheets kamu
-// Cara mendapatkan ID: lihat URL Google Sheets, salin bagian setelah /d/ dan sebelum /edit
+// ── KONFIGURASI ── Ganti nilai ini sebelum deploy ──────────────────────────
 var SPREADSHEET_ID = "GANTI_DENGAN_ID_SPREADSHEET_KAMU";
+// Cara mendapatkan ID: lihat URL Google Sheets kamu:
+// https://docs.google.com/spreadsheets/d/[INI_ADALAH_ID]/edit
+// Salin bagian antara /d/ dan /edit
 
-// Nama sheet di dalam spreadsheet (biasanya "Sheet1" atau sesuai yang kamu beri nama)
-var SHEET_NAME = "Early Access";
-
-
-// ============================================================
-//  FUNGSI UTAMA — Menerima data dari form website
-// ============================================================
+var SHEET_NAME = "Leads";
+// ───────────────────────────────────────────────────────────────────────────
 
 /**
- * doPost — Fungsi ini dipanggil setiap kali form di website dikirim.
- * @param {Object} e - Event object dari HTTP POST request
- * @returns {TextOutput} Respons JSON
+ * doGet — Entry point utama untuk JSON-P.
+ *
+ * Menerima parameter via URL query string:
+ *   callback  : nama fungsi callback JavaScript (wajib, divalidasi ketat)
+ *   nama      : nama lengkap pendaftar (wajib)
+ *   username  : username Instagram tanpa @ (wajib)
+ *   sumber    : asal traffic (opsional, default: "Dapur Sepekan Website")
+ *
+ * Jaminan: status "success" HANYA dikembalikan setelah sheet.appendRow()
+ * berhasil dieksekusi. Jika appendRow melempar exception, blok catch
+ * mengembalikan status "error". Tidak ada jalur kode yang mengembalikan
+ * "success" sebelum appendRow dipanggil.
  */
-function doPost(e) {
+function doGet(e) {
+  var params = (e && e.parameter) ? e.parameter : {};
+
+  // ── Validasi callback — hanya izinkan identifier JavaScript yang valid ──
+  // Ini mencegah injection: nama callback hanya boleh huruf, angka, $, _
+  var rawCallback = (params.callback || "").toString();
+  var callback    = rawCallback.replace(/[^a-zA-Z0-9_$]/g, "");
+
+  if (!callback || callback.length < 1 || callback.length > 60) {
+    // Callback tidak valid — kembalikan JSON biasa (browser tidak bisa membacanya
+    // karena CORS, tapi setidaknya server tidak error dan tidak bocorkan data)
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status:  "error",
+        message: "Parameter callback tidak valid atau tidak ada."
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // Fungsi pembantu: bungkus data sebagai JSON-P
+  // Format: callbackName({"status":"...","message":"..."});
+  function respond(data) {
+    return ContentService
+      .createTextOutput(callback + "(" + JSON.stringify(data) + ");")
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+
+  // ── Validasi dan sanitasi parameter input ──
+
+  var nama     = (params.nama     || "").toString().trim();
+  var username = (params.username || "").toString().trim();
+  var sumber   = (params.sumber   || "Dapur Sepekan Website").toString().trim();
+
+  // Batasi panjang untuk mencegah penyalahgunaan
+  if (nama.length > 100) {
+    return respond({ status: "error", message: "Nama terlalu panjang (maks 100 karakter)." });
+  }
+  if (sumber.length > 100) {
+    sumber = sumber.substring(0, 100);
+  }
+
+  // Normalisasi username: hapus semua @ di awal, lalu tambahkan satu
+  username = username.replace(/^@+/, "");
+  if (username.length > 30) {
+    return respond({ status: "error", message: "Username terlalu panjang (maks 30 karakter)." });
+  }
+
+  // Validasi format username Instagram (huruf, angka, titik, underscore saja)
+  if (username && !/^[a-zA-Z0-9._]+$/.test(username)) {
+    return respond({ status: "error", message: "Format username tidak valid." });
+  }
+
+  // Tambahkan @ setelah validasi format
+  if (username) username = "@" + username;
+
+  // Validasi field wajib
+  if (!nama) {
+    return respond({ status: "error", message: "Nama tidak boleh kosong." });
+  }
+  if (!username) {
+    return respond({ status: "error", message: "Username Instagram tidak boleh kosong." });
+  }
+
+  // ── Simpan ke spreadsheet ──────────────────────────────────────────────
+  // Status "success" HANYA dikirim setelah baris ini (appendRow) berhasil.
+  // Jika terjadi exception di manapun dalam try block, catch akan
+  // mengembalikan status "error". Tidak ada fallthrough ke success.
   try {
-    // Ambil data dari form
-    var nama      = "";
-    var instagram = "";
+    var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
+    var sheet = ss.getSheetByName(SHEET_NAME);
 
-    // Coba baca dari FormData (cara yang digunakan oleh script.js)
-    if (e && e.parameter) {
-      nama      = (e.parameter.nama      || "").toString().trim();
-      instagram = (e.parameter.instagram || "").toString().trim();
-    }
-
-    // Validasi: pastikan data tidak kosong
-    if (!nama || !instagram) {
-      return ContentService
-        .createTextOutput(JSON.stringify({
-          status: "error",
-          message: "Data tidak lengkap. Nama dan Instagram diperlukan."
-        }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-
-    // Buka spreadsheet
-    var spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
-    var sheet = spreadsheet.getSheetByName(SHEET_NAME);
-
-    // Jika sheet belum ada, buat baru dengan header
+    // Buat tab Leads jika belum ada (setup otomatis pertama kali)
     if (!sheet) {
-      sheet = spreadsheet.insertSheet(SHEET_NAME);
-      // Buat baris header
-      sheet.appendRow(["Timestamp", "Nama", "Username Instagram"]);
-
-      // Format header agar mudah dibaca
-      var headerRange = sheet.getRange(1, 1, 1, 3);
+      sheet = ss.insertSheet(SHEET_NAME);
+      sheet.appendRow(["Timestamp", "Nama", "Username Instagram", "Sumber", "Status Lead"]);
+      var headerRange = sheet.getRange(1, 1, 1, 5);
       headerRange.setFontWeight("bold");
       headerRange.setBackground("#1B2A4A");
       headerRange.setFontColor("#FFFFFF");
+      sheet.setFrozenRows(1);
+      sheet.setColumnWidth(1, 180);
+      sheet.setColumnWidth(2, 180);
+      sheet.setColumnWidth(3, 200);
+      sheet.setColumnWidth(4, 220);
+      sheet.setColumnWidth(5, 120);
     }
 
-    // Tambahkan baris baru dengan data pendaftar
-    var timestamp = new Date();
-    sheet.appendRow([timestamp, nama, instagram]);
+    // ← Ini satu-satunya titik yang dianggap "data berhasil tersimpan"
+    sheet.appendRow([new Date(), nama, username, sumber, "New"]);
 
-    // Kirim respons sukses
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        status: "success",
-        message: "Data berhasil disimpan.",
-        data: {
-          nama: nama,
-          instagram: instagram,
-          timestamp: timestamp.toString()
-        }
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+    // Hanya setelah appendRow selesai tanpa exception, kirim sukses
+    return respond({
+      status:  "success",
+      message: "Pendaftaran berhasil!",
+      data:    { nama: nama, username: username }
+    });
 
-  } catch (error) {
-    // Tangani error dan kirim respons gagal
-    Logger.log("Error doPost: " + error.toString());
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        status: "error",
-        message: "Terjadi kesalahan: " + error.toString()
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    // appendRow gagal, spreadsheet tidak ditemukan, atau error lainnya
+    // Status "error" dikirim — TIDAK ada sukses palsu
+    Logger.log("doGet error: " + err.toString());
+    return respond({
+      status:  "error",
+      message: "Gagal menyimpan data. Pastikan SPREADSHEET_ID sudah benar."
+    });
   }
 }
 
-
 /**
- * doGet — Fungsi tes sederhana untuk memastikan Apps Script berjalan.
- * Buka URL Apps Script di browser untuk melihat hasilnya.
+ * doPost — Alias ke doGet untuk backward compatibility.
+ * Form lama yang masih menggunakan POST tidak akan error.
  */
-function doGet(e) {
-  return ContentService
-    .createTextOutput(JSON.stringify({
-      status: "ok",
-      message: "Dapur Sepekan Apps Script berjalan dengan baik.",
-      timestamp: new Date().toString()
-    }))
-    .setMimeType(ContentService.MimeType.JSON);
+function doPost(e) {
+  return doGet(e);
 }
 
-
 /**
- * setupSheet — Fungsi untuk membuat struktur spreadsheet secara manual.
- * Jalankan fungsi ini sekali dari Apps Script Editor jika sheet belum ada:
- * Klik nama fungsi "setupSheet" lalu klik tombol "Run".
+ * setupSheet — Jalankan sekali dari editor untuk membuat tab Leads secara manual.
+ * Apps Script Editor → pilih fungsi "setupSheet" → klik Run.
+ * (doGet juga akan membuat tab otomatis jika belum ada, tapi fungsi ini
+ * berguna untuk mempersiapkan sheet sebelum menerima data pertama.)
  */
 function setupSheet() {
-  var spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var ss    = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var exist = ss.getSheetByName(SHEET_NAME);
 
-  // Cek apakah sheet sudah ada
-  var existingSheet = spreadsheet.getSheetByName(SHEET_NAME);
-  if (existingSheet) {
-    Logger.log("Sheet '" + SHEET_NAME + "' sudah ada.");
+  if (exist) {
+    Logger.log("Sheet '" + SHEET_NAME + "' sudah ada. Tidak ada yang diubah.");
     return;
   }
 
-  // Buat sheet baru
-  var sheet = spreadsheet.insertSheet(SHEET_NAME);
+  var sheet = ss.insertSheet(SHEET_NAME);
+  sheet.appendRow(["Timestamp", "Nama", "Username Instagram", "Sumber", "Status Lead"]);
 
-  // Buat header
-  sheet.appendRow(["Timestamp", "Nama", "Username Instagram"]);
+  var h = sheet.getRange(1, 1, 1, 5);
+  h.setFontWeight("bold");
+  h.setBackground("#1B2A4A");
+  h.setFontColor("#FFFFFF");
 
-  // Format header
-  var headerRange = sheet.getRange(1, 1, 1, 3);
-  headerRange.setFontWeight("bold");
-  headerRange.setBackground("#1B2A4A");
-  headerRange.setFontColor("#FFFFFF");
-
-  // Atur lebar kolom
-  sheet.setColumnWidth(1, 200); // Timestamp
-  sheet.setColumnWidth(2, 200); // Nama
-  sheet.setColumnWidth(3, 200); // Instagram
-
-  // Bekukan baris header
   sheet.setFrozenRows(1);
+  sheet.setColumnWidth(1, 180);
+  sheet.setColumnWidth(2, 180);
+  sheet.setColumnWidth(3, 200);
+  sheet.setColumnWidth(4, 220);
+  sheet.setColumnWidth(5, 120);
 
-  Logger.log("Sheet '" + SHEET_NAME + "' berhasil dibuat.");
+  Logger.log("Sheet '" + SHEET_NAME + "' berhasil dibuat dengan 5 kolom.");
 }
