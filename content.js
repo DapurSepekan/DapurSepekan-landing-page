@@ -87,7 +87,7 @@ const CONTENT = {
 
     // Tombol CTA — teks dan anchor target
     ctaButton: "Daftar menjadi yang pertama!",
-    ctaLink: "#area-layanan",   // Lead Form Early Access
+    ctaLink: "#faq",   // Page 6 = section FAQ
 
     // Gambar produk (kanan hero) — masukkan file PNG transparan ke assets/
     productImage: "assets/hero-product.png",
@@ -95,6 +95,8 @@ const CONTENT = {
 
     // Background dapur — diatur via CSS .hero__bg (bukan via JS)
     // Lihat komentar di style.css untuk cara mengaktifkan background-image
+  },   // ← penutup hero:
+
   // ============================================================
   //  TANTANGAN KELUARGA — Section Page 2
   //  Berisi headline utama + 3 kartu tantangan dengan background gambar.
