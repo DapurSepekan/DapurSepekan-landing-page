@@ -98,6 +98,41 @@ const CONTENT = {
   },   // ← penutup hero:
 
   // ============================================================
+  //  LEAD FORM — data untuk s5-early-access-form di #area-layanan
+  // ============================================================
+  form: {
+    title: "Daftar Menjadi yang Pertama",
+    subtitle: "Daftarkan diri kamu dan dapatkan informasi launching serta penawaran eksklusif early access.",
+
+    namePlaceholder: "Nama lengkap kamu",
+    nameLabel: "Nama",
+    instagramPlaceholder: "@username_instagram",
+    instagramLabel: "Username Instagram",
+
+    submitButton: "Daftar Early Access",
+    submitButtonLoading: "Mengirim...",
+
+    errorName: "Nama tidak boleh kosong.",
+    errorInstagram: "Username Instagram tidak boleh kosong.",
+    errorInstagramFormat: "Masukkan username Instagram yang valid (huruf, angka, titik, atau underscore).",
+    errorSubmit: "Gagal mengirim data. Periksa koneksi internet kamu dan coba lagi.",
+
+    privacyPolicyText: "Dengan mendaftar, kamu menyetujui",
+    privacyPolicyLink: "Kebijakan Privasi",
+    privacyPolicyText2: "kami.",
+  },
+
+  // ============================================================
+  //  THANK YOU POPUP
+  // ============================================================
+  thankYou: {
+    title: "Terima Kasih! 🎉",
+    message: "Kamu sudah terdaftar sebagai Early Access. Kami akan menghubungi kamu melalui Instagram saat Dapur Sepekan siap launching.",
+    subMessage: "Pantau terus Instagram kami untuk update terbaru.",
+    closeButton: "Tutup",
+  },
+
+  // ============================================================
   //  TANTANGAN KELUARGA — Section Page 2
   //  Berisi headline utama + 3 kartu tantangan dengan background gambar.
   // ============================================================

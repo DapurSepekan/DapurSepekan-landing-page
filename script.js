@@ -72,7 +72,6 @@ function renderContent() {
   renderHowItWorks();
   renderPackages();
   renderFAQ();
-  renderComingSoon();
   renderFooter();
   updatePageMeta();
 }
@@ -208,9 +207,7 @@ function renderChallenges() {
     >
       <div class="challenge-card__overlay"></div>
       <div class="challenge-card__body">
-        <div class="challenge-card__number">${item.number}</div>
         <h3 class="challenge-card__title">${item.title}</h3>
-        <p class="challenge-card__description">${item.description}</p>
       </div>
     </div>
   `).join("");
