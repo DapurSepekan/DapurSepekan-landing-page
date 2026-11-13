@@ -87,7 +87,7 @@ const CONTENT = {
 
     // Tombol CTA — teks dan anchor target
     ctaButton: "Daftar menjadi yang pertama!",
-    ctaLink: "#faq",   // Page 6 = section FAQ
+    ctaLink: "#area-layanan",   // Lead Form Early Access
 
     // Gambar produk (kanan hero) — masukkan file PNG transparan ke assets/
     productImage: "assets/hero-product.png",
